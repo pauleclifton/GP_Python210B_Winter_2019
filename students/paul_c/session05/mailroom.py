@@ -44,13 +44,10 @@ def create_report():
     header_length = len(row)
     print("\n" + row)
     print("=" * header_length)
-    for key, value in sorted(donors.items()):
-        value_sum = str(sum(value))
-        value_len = str(len(value))
-        value_ave = str(sum(value)/(len(value)))
-        row_format = (key, "$" + value_sum, value_len, "$" + value_ave)
-        donor_row = " ".join(["{:20s} {:>20s} {:>20s} {:>20s}"]).format(*row_format)
-        print(donor_row)
+    donor_row = [f"{key:20s} {sum(value):>20.2f} {len(value):>20.2f} {sum(value)/len(value):>20.2f}" for key, value in
+                 sorted(donors.items())]
+    for donor in donor_row:
+        print(donor)
     print("\n")
 
 
