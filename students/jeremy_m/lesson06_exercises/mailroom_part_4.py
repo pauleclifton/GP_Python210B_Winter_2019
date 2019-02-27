@@ -73,7 +73,17 @@ def send_a_thank_you():
         inputted amount """
     clear_screen()
 
-    # Ask user for the donors name
+    donor_name_input, donation_amount = send_a_thank_you_inputs()
+    add_donor(donor_name_input, donation_amount)
+
+    clear_screen()
+    print_thank_you_message(donor_name_input)
+
+
+def send_a_thank_you_inputs():
+    """ Returns donors name and their recent donation amount after getting both
+        as input from the user.
+    """
     donor_name_input = get_user_input(messages['thanks'])
 
     if donor_name_input == 'list':
@@ -93,10 +103,11 @@ def send_a_thank_you():
         except ValueError:
             print('Please enter a number.')
 
-    add_donor(donor_name_input, donation_amount)
+    return (donor_name_input, donation_amount)
 
-    clear_screen()
-    # Print a formatted message with donors name and recent donation amount
+
+def print_thank_you_message(donor_name_input):
+    """ Print a formatted message with donors name and recent donation amount """
     print(messages['thank_you_message'].format('Thank you so much',
                                                donor_name_input, '$', int(donors[donor_name_input][-1])))
 
@@ -116,27 +127,22 @@ def create_a_report():
         donations, and average donation amount. """
     clear_screen()
 
-    donor_sums = sum_donors_donations()
-    sorted_donor_sums = sort_by_values(donor_sums)
+    sorted_donor_sums = sum_donors_donations()
 
     print_report(sorted_donor_sums)
 
 
 def sum_donors_donations():
-    """ Returns a dict based off donors dict with the structure; key: sum(value)
+    """ Returns a dict sorted by values. The values are the sums of a donors 
+        donations
     """
     donor_sums = {donor: sum(donations)
                   for donor, donations in donors.items()}
 
-    return donor_sums
-
-
-def sort_by_values(to_sort):
-    """ Takes in a dict and returns that dict now sorted by its values. """
     sorted_by_values = sorted((value, key)
-                              for (key, value) in to_sort.items())
+                              for (key, value) in donor_sums.items())
 
-    return sorted_by_values
+    return sorted_by_values    
 
 
 def print_report(sorted_donor_totals):

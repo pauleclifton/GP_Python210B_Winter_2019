@@ -2,10 +2,35 @@
 import unittest
 from pathlib import Path
 
+
 from students.jeff_shabani.session06 import mailroom_4
 
 ANSWER = 'New_Donor'
 AMOUNT = 4512
+
+
+def get_value(text, check_type):
+    """
+    Refactored function from mailroom_4 to mock
+    user input testing
+    """
+    try:
+        value = check_type(text)
+        return value
+    except ValueError:
+        return 'Please enter a valid value'
+
+
+def get_input(text):
+    return input(text)
+
+
+def amount_type():
+    answer = get_input('Please enter an amount')
+    if isinstance(answer, int):
+        return 'Good'
+    if not isinstance(answer, int):
+        return "Wrong type."
 
 
 class mailroomTests(unittest.TestCase):
@@ -56,6 +81,23 @@ class mailroomTests(unittest.TestCase):
         """
 
         self.assertIn('Bobby', mailroom_4.create_new_donors_dict())
+
+    def test_get_value_pass(self):
+        """
+        test that get_value function returns input value
+        if input value is the correct type
+        :return: int
+        """
+        self.assertEqual(get_value(45, int), 45)
+
+    @unittest.expectedFailure
+    def test_get_value_fail(self):
+        """
+        test that get_value function returns a message to
+        user if input value is incorrect type
+        :return:
+        """
+        self.assertEqual(get_value('amoimt', int), 54)
 
 
 if __name__ == '__main__':

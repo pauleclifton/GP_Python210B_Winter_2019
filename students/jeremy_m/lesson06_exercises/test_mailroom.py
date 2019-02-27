@@ -20,17 +20,14 @@ def test_add_donor_new_donation():
 
 
 def test_sum_donors_donations():
-    """ Testing whether a donors donations are summed correctly """
-    mp.add_donor('Flutter By', 3)
-    mp.add_donor('Flutter By', 2)
-    assert mp.sum_donors_donations()['Flutter By'] == 5
-
-
-def test_sort_by_values():
-    """ Testing whether sort_by_values returns a dict sorted as expected """
-    test_dict = {'one': 1, 'two': 2, 'three': 3}
-    sorted_test_dict = mp.sort_by_values(test_dict)
-    assert sorted_test_dict[0][0] == 1
+    """ Testing whether a donors donations are summed correctly and if donor sums
+        dict is sorted properly.
+    """
+    mp.add_donor('James', -5)
+    mp.add_donor('James', -3)
+    sorted_test_dict = mp.sum_donors_donations()
+    assert sorted_test_dict[0][1] == 'James'
+    assert sorted_test_dict[0][0] == -8
 
 
 def test_get_donor_filename():
