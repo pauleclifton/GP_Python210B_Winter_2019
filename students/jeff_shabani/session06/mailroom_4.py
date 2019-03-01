@@ -34,6 +34,21 @@ def get_value(text, check_type):
             print("Invalid value.  Please try again")
             continue
 
+def get_input(text):
+    return input(text)
+
+def get_value_test(text, check_type):
+    def get_value_test(text, check_type):
+        """
+        Catch non-numeric entries for donation amount.
+        """
+        text = get_input('Please enter a value')
+        try:
+            value = check_type(text)
+            return True
+        except ValueError:
+            return False
+
 
 def view_donor_names():
     [print(name) for name in donors]
