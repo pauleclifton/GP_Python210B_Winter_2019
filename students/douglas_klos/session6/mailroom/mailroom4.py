@@ -251,8 +251,9 @@ def thank_you_menu():
         name_input = get_value(THANK_YOU_PROMPT, str)
         if name_input.lower() in ('q', 'quit'):
             return
-        elif name_input.lower() in ('l', 'list'):
+        if name_input.lower() in ('l', 'list'):
             display_database()
+            continue
         elif name_input not in mailroom_db.keys():
             print(add_donor_to_database(name_input))
             continue
@@ -264,9 +265,8 @@ def thank_you_menu():
         if donation_input in mailroom_db[name_input]:
             print(send_thank_you_note(name_input, donation_input))
             return
-        else:
-            print(f'Donation from {name_input} '
-                  f'in the amount of {donation_input} not found')
+        print(f'Donation from {name_input} '
+              f'in the amount of {donation_input} not found')
 
 
 def send_thank_you_note(donor, donation):
