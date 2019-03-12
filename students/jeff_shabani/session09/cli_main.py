@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import sys
 from students.jeff_shabani.session09.donor_models import *
 
@@ -18,14 +19,14 @@ donors = {'William B': [120, 130, 50],
           'Skip Bittman': [75, 125, 19],
           'Ashley Lashbrooke': [10000, 15000]}
 
-
 prompt = input("\n".join(("Welcome to my charity!",
-                        "Please select and option below:",
-                        "1 - Send a Thank You to an individual",
-                        "2 - Create a Report",
-                        "3 - Send letters to all donors",
-                        "4 - Quit",
-                        ">>> ")))
+                          "Please select and option below:",
+                          "1 - Send a Thank You to an individual",
+                          "2 - Create a Report",
+                          "3 - Send letters to all donors",
+                          "4 - Quit",
+                          ">>> ")))
+
 
 class CommandLineInterface(Donor, DonorCollection):
     def __init__(self):
@@ -35,8 +36,6 @@ class CommandLineInterface(Donor, DonorCollection):
         else:
             print('nicht vier')
         super().__init__()
-
-
 
     def get_value(self, text, check_type):
         """
@@ -50,6 +49,32 @@ class CommandLineInterface(Donor, DonorCollection):
                 print("Invalid value.  Please try again")
                 continue
 
+    def set_letter_directory_path_path(self):
+        """
+        Check if user-entered directory exists and offer them the
+        choice to create it if not. Default is current working
+        directory
+        """
+        location = input(f'Please enter the full path of the directory\n'
+                         f'where you want to save your letters.\n'
+                         f'Hit <Enter> to save to the current working directory.')
+
+        if not location:
+            location = os.getcwd()
+        else:
+            location = Path(f'{location}')
+            if not location.exists():
+                create_directory_answer = input('Path does\'t exist. Do you want to create it?')
+                # accept any version of yes, yep, etc.
+                if create_directory_answer.lower() == 'yes':
+                    location.mkdir()
+                    location = os.chdir(location)
+                else:
+                    location = os.getcwd()
+            else:
+                location = os.chdir(location)
+        return location
+
     def add_donations_and_send_thank_you(self):
         while True:
 
@@ -59,24 +84,19 @@ class CommandLineInterface(Donor, DonorCollection):
                 Donor.view_donor_names()
                 continue
 
-            amount = get_value('How much would this donor like to donate?', int)
+            amount = CommandLineInterface.get_value(self, 'How much would this donor like to donate?', int)
 
-            set_letter_directory_path_path()
+            CommandLineInterface.set_letter_directory_path_path(self)
 
             if answer not in donors:
-                add_donor(answer, amount)
-                write_a_single_letter(answer, amount)
+                Donor.add_donor(self, answer, amount)
+                Donor.write_a_single_letter(self, answer, amount)
             else:
-                add_donor(answer, amount)
-                write_a_single_letter(answer, amount)
+                Donor.add_donor(self, answer, amount)
+                Donor.write_a_single_letter(self, answer, amount)
 
             print(f'\nThank you {answer.split()[0]} for you generous donation of ${amount:,.0f}\n')
             break
 
 
-
-c=CommandLineInterface()
-
-
-
-
+c = CommandLineInterface()
