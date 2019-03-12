@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
+
+# Jeff Shabani
+# March 12th, 2019
+# Python 210, Session 8
+# test_circle.py
+
 import unittest
 
-from circle import *
+from students.jeff_shabani.session08.circle import *
 
 
 class CircleTests(unittest.TestCase):
@@ -46,11 +52,11 @@ class CircleTests(unittest.TestCase):
         c1 = Circle(2)
         c2 = Circle(3)
         c5 = Circle(5)
-        self.assertEqual(Circle(c1 + c2), c5)
-        self.assertEqual(Circle(c1 * 5), Circle(10.0))
-        self.assertEqual(Circle(c5 - c2), c1)
+        self.assertEqual(c1 + c2, c5)
+        self.assertEqual(c1 * 5, Circle(10.0))
+        self.assertEqual(c5 - c2, c1)
         # this tests argument reversal in mult function
-        self.assertEqual(Circle(5 * c1), Circle(10.0))
+        self.assertEqual(5 * c1, Circle(10.0))
         del c1, c2
 
     def test_compare_circles(self):
@@ -61,8 +67,6 @@ class CircleTests(unittest.TestCase):
         self.assertEqual(c1 < c2, True)
         self.assertEqual(c1 != c2, True)
         self.assertEqual(c3 == c2, True)
-        self.assertEqual(c1 * c2, 6.0)
-        self.assertEqual(c1 * 10, 20)
         self.assertEqual(c1 * 10 == 10 * c1, True)
         del c1, c2, c3
 
@@ -70,11 +74,10 @@ class CircleTests(unittest.TestCase):
         c1 = Circle(12)
         c2 = Circle(10)
         c3 = Circle(2)
-        c2 += c1
-        c3 *= c1
-        self.assertEqual(c2, Circle(22))
-        self.assertEqual(c3, Circle(24))
-        del c1, c2, c3
+        c4 = (c1)
+        c4 +=c2  #new object to test for augmented addition
+        self.assertEqual(c4, Circle(22))
+        del c1, c2, c3, c4
 
     # test for negative radius
     @unittest.expectedFailure

@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 
+# Jeff Shabani
+# March 12th, 2019
+# Python 210, Session 8
+# circle.py
+
+
 import math
 
 """
@@ -42,29 +48,26 @@ class Circle(object):
     # simple add method
     def __add__(self, other):
         new_radius = self.radius + other.radius
-        return new_radius
-
-    #simple subtraction method
-    def __sub__(self, other):
-        new_radius = self.radius - other.radius
-        return new_radius
-
-    # augmented assignment add method
-    def __iadd__(self, other):
-        new_radius =  self.radius + other.radius
         new_object = Circle(new_radius)
         return new_object
 
-    # augmented assigment exponential method
-    def __imul__(self, other):
-        new_radius = self.radius * other
+    # simple subtraction method
+    def __sub__(self, other):
+        new_radius = self.radius - other.radius
+        new_object = Circle(new_radius)
+        return new_object
+
+    # augmented assignment add method
+    def __iadd__(self, other):
+        new_radius = self.radius + other.radius
         new_object = Circle(new_radius)
         return new_object
 
     # multiplication method
     def __mul__(self, other):
         new_radius = self.radius * other
-        return new_radius
+        new_object = Circle(new_radius)
+        return new_object
 
     # allow for reversal of arguments
     __rmul__ = __mul__
@@ -112,8 +115,3 @@ class Sphere(Circle):
     def __str__(self):
         return f'Sphere with radius of {self.radius} volume of ' \
             f'{self.volume()} & surface area of {self.area()}'
-
-
-
-
-
