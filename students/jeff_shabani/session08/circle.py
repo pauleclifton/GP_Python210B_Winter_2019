@@ -44,15 +44,22 @@ class Circle(object):
         new_radius = self.radius + other.radius
         return new_radius
 
+    #simple subtraction method
+    def __sub__(self, other):
+        new_radius = self.radius - other.radius
+        return new_radius
+
     # augmented assignment add method
     def __iadd__(self, other):
         new_radius =  self.radius + other.radius
-        return new_radius
+        new_object = Circle(new_radius)
+        return new_object
 
     # augmented assigment exponential method
-    def __ipow__(self, other):
-        new_radius = self.radius ** other
-        return new_radius
+    def __imul__(self, other):
+        new_radius = self.radius * other
+        new_object = Circle(new_radius)
+        return new_object
 
     # multiplication method
     def __mul__(self, other):
@@ -106,10 +113,7 @@ class Sphere(Circle):
         return f'Sphere with radius of {self.radius} volume of ' \
             f'{self.volume()} & surface area of {self.area()}'
 
-c1 = Circle(4)
-c2 = Circle(2)
-c3 = Circle(c1 + c2)
-print(c3)
+
 
 
 
