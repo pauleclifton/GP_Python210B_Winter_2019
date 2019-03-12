@@ -19,22 +19,17 @@ donors = {'William B': [120, 130, 50],
           'Skip Bittman': [75, 125, 19],
           'Ashley Lashbrooke': [10000, 15000]}
 
-prompt = input("\n".join(("Welcome to my charity!",
-                          "Please select and option below:",
-                          "1 - Send a Thank You to an individual",
-                          "2 - Create a Report",
-                          "3 - Send letters to all donors",
-                          "4 - Quit",
-                          ">>> ")))
+# prompt = input("\n".join(("Welcome to my charity!",
+#                           "Please select and option below:",
+#                           "1 - Send a Thank You to an individual",
+#                           "2 - Create a Report",
+#                           "3 - Send letters to all donors",
+#                           "4 - Quit",
+#                           ">>> ")))
 
 
 class CommandLineInterface(Donor, DonorCollection):
     def __init__(self):
-        if prompt == '4':
-            print('Tschüss')
-            sys.exit()
-        else:
-            print('nicht vier')
         super().__init__()
 
     def get_value(self, text, check_type):
@@ -100,3 +95,4 @@ class CommandLineInterface(Donor, DonorCollection):
 
 
 c = CommandLineInterface()
+c.set_letter_directory_path_path()
