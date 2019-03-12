@@ -12,6 +12,13 @@ Contains mailroom user interaction functions
 # Python 210, Session 9
 # donors.py
 
+donors = {'William B': [120, 130, 50],
+          'Sammy Maudlin': [500, 125, 670, 1000],
+          'Bobby Bittman': [10],
+          'Skip Bittman': [75, 125, 19],
+          'Ashley Lashbrooke': [10000, 15000]}
+
+
 prompt = input("\n".join(("Welcome to my charity!",
                         "Please select and option below:",
                         "1 - Send a Thank You to an individual",
@@ -28,6 +35,43 @@ class CommandLineInterface(Donor, DonorCollection):
         else:
             print('nicht vier')
         super().__init__()
+
+
+
+    def get_value(self, text, check_type):
+        """
+        Catch non-numeric entries for donation amount.
+        """
+        while True:
+            try:
+                value = check_type(input(text))
+                return value
+            except ValueError:
+                print("Invalid value.  Please try again")
+                continue
+
+    def add_donations_and_send_thank_you(self):
+        while True:
+
+            answer = input('Please enter a donor Full Name.')
+
+            if answer.lower() == 'list':
+                Donor.view_donor_names()
+                continue
+
+            amount = get_value('How much would this donor like to donate?', int)
+
+            set_letter_directory_path_path()
+
+            if answer not in donors:
+                add_donor(answer, amount)
+                write_a_single_letter(answer, amount)
+            else:
+                add_donor(answer, amount)
+                write_a_single_letter(answer, amount)
+
+            print(f'\nThank you {answer.split()[0]} for you generous donation of ${amount:,.0f}\n')
+            break
 
 
 
