@@ -44,7 +44,8 @@ class CircleTests(unittest.TestCase):
     def test_math(self):
         c1 = Circle(2)
         c2 = Circle(3)
-        self.assertEqual(c1 + c2, 5.0)
+        c5 = Circle(5)
+        self.assertEqual(Circle(c1 + c2), c5)
         self.assertEqual(c1 * 5, 10.0)
         # this tests argument reversal in mult function
         self.assertEqual(5 * c1, 10.0)
