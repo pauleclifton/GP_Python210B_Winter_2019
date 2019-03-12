@@ -72,7 +72,6 @@ class DonorCollection():
         return OrderedDict(sorted(new_donors.items(), key=itemgetter(1), reverse=True))
 
     def write_letters_to_all_donors(self):
-        #TODO: set_letter_directory_path_path()
         for donor, total in self.create_new_donors_dict().items():
             with open(f'{donor}.txt', 'wt') as letter:
                 letter.write(write_a_letter(donor, total[0]))
