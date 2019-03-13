@@ -76,7 +76,7 @@ class CommandLineInterface(Donor, DonorCollection):
             answer = input('Please enter a donor Full Name.')
 
             if answer.lower() == 'list':
-                Donor.view_donor_names()
+                Donor.view_donor_names(self)
                 continue
 
             amount = CommandLineInterface.get_value(self, 'How much would this donor like to donate?', int)
@@ -94,5 +94,6 @@ class CommandLineInterface(Donor, DonorCollection):
             break
 
 
-c = CommandLineInterface()
-c.set_letter_directory_path_path()
+if __name__ == '__main__':
+    c = CommandLineInterface()
+    c.add_donations_and_send_thank_you()
