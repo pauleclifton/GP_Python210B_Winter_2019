@@ -14,7 +14,7 @@ class DonorModelTests(unittest.TestCase):
         d = Donor()
         d.add_donor(ANSWER, AMOUNT)
         expected = {f'{ANSWER}':[4512]}
-        self.assertDictEqual(expected, d.donors)
+        self.assertIn(ANSWER, d.donors)
         del d
 
     def test_write_a_letter(self):

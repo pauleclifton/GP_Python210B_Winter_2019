@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import sys
 from students.jeff_shabani.session09.mailroom_oo.donor_models import *
 
 """
@@ -8,7 +9,7 @@ Contains mailroom user interaction functions
 """
 
 # Jeff Shabani
-# March 1st, 2019
+# March , 2019
 # Python 210, Session 9
 # donors.py
 
@@ -17,6 +18,7 @@ donors = {'William B': [120, 130, 50],
           'Bobby Bittman': [10],
           'Skip Bittman': [75, 125, 19],
           'Ashley Lashbrooke': [10000, 15000]}
+
 
 # prompt = input("\n".join(("Welcome to my charity!",
 #                           "Please select and option below:",
@@ -92,7 +94,20 @@ class CommandLineInterface(Donor, DonorCollection):
             print(f'\nThank you {answer.split()[0]} for you generous donation of ${amount:,.0f}\n')
             break
 
+    def quit_the_program(self):
+        print('Tschüss')
+        sys.exit()
+
 
 if __name__ == '__main__':
     c = CommandLineInterface()
-    c.add_donations_and_send_thank_you()
+    #c.add_donations_and_send_thank_you()
+    c.create_report()
+
+    # prompt = input("\n".join(("Welcome to my charity!",
+    #                           "Please select and option below:",
+    #                           "1 - Send a Thank You to an individual",
+    #                           "2 - Create a Report",
+    #                           "3 - Send letters to all donors",
+    #                           "4 - Quit",
+    #                           ">>> ")))

@@ -15,9 +15,22 @@ Framework accessing multiple donors.
 # Python 210, Session 9
 # donors.py
 
+# donors = {'William B': [120, 130, 50],
+#           'Sammy Maudlin': [500, 125, 670, 1000],
+#           'Bobby Bittman': [10],
+#           'Skip Bittman': [75, 125, 19],
+#           'Ashley Lashbrooke': [10000, 15000]}
+
+
 class Donor():
-    donors = {}
-    donations = list()
+    # donors = {}
+    # donations = list()
+    donors = {'William B': [120, 130, 50],
+              'Sammy Maudlin': [500, 125, 670, 1000],
+              'Bobby Bittman': [10],
+              'Skip Bittman': [75, 125, 19],
+              'Ashley Lashbrooke': [10000, 15000]}
+
 
     def __init__(self, name=''):
         self.name = name
@@ -30,8 +43,7 @@ class Donor():
         :param amount: amount to donate
         :return: updated donors dictionary
         """
-        self.donations.append(amount)
-        self.donors[answer] = self.donations
+        self.donors[answer] = amount
 
     def write_a_single_letter(self, answer, amount):
         """
@@ -49,17 +61,18 @@ class Donor():
         [print(name) for name in self.donors]
 
 
-class DonorCollection():
+class DonorCollection(Donor):
 
-    donors = {'William B': [120, 130, 50],
-              'Sammy Maudlin': [500, 125, 670, 1000],
-              'Bobby Bittman': [10],
-              'Skip Bittman': [75, 125, 19],
-              'Ashley Lashbrooke': [10000, 15000]}
+    # donors = {'William B': [120, 130, 50],
+    #           'Sammy Maudlin': [500, 125, 670, 1000],
+    #           'Bobby Bittman': [10],
+    #           'Skip Bittman': [75, 125, 19],
+    #           'Ashley Lashbrooke': [10000, 15000]}
 
     def __init__(self, name=''):
         self.name = name
         self.donation = 0
+        super().__init__()
 
     def view_donor_names(self):
         [print(name) for name in self.donors]
@@ -85,3 +98,5 @@ class DonorCollection():
         # get donors and totals from new_donors dictionary
         for k, v in self.create_new_donors_dict().items():
             print(f'{str(k).ljust(20)}{str(v[0]).rjust(20)}{str(v[1]).rjust(20)}{str(v[2]).rjust(20)}')
+
+
