@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import os
-from mailroom_oo.donor_models import *
+from students.jeff_shabani.session09.mailroom_oo.donor_models import *
 
 """
 Contains mailroom user interaction functions
