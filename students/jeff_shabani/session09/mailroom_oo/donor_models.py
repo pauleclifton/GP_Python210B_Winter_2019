@@ -10,30 +10,17 @@ from students.jeff_shabani.session09.mailroom_oo.write_a_letter import write_a_l
 Framework accessing multiple donors.
 """
 
+
 # Jeff Shabani
 # March 1st, 2019
 # Python 210, Session 9
 # donors.py
 
-# donors = {'William B': [120, 130, 50],
-#           'Sammy Maudlin': [500, 125, 670, 1000],
-#           'Bobby Bittman': [10],
-#           'Skip Bittman': [75, 125, 19],
-#           'Ashley Lashbrooke': [10000, 15000]}
-
-
 class Donor():
-    # donors = {}
-    # donations = list()
-    donors = {'William B': [120, 130, 50],
-              'Sammy Maudlin': [500, 125, 670, 1000],
-              'Bobby Bittman': [10],
-              'Skip Bittman': [75, 125, 19],
-              'Ashley Lashbrooke': [10000, 15000]}
 
-
-    def __init__(self, name=''):
+    def __init__(self, donors=None, name=''):
         self.name = name
+        self.donors = donors
         self.donation = []
 
     def add_donor(self, answer, amount):
@@ -61,18 +48,12 @@ class Donor():
         [print(name) for name in self.donors]
 
 
-class DonorCollection(Donor):
+class DonorCollection():
 
-    # donors = {'William B': [120, 130, 50],
-    #           'Sammy Maudlin': [500, 125, 670, 1000],
-    #           'Bobby Bittman': [10],
-    #           'Skip Bittman': [75, 125, 19],
-    #           'Ashley Lashbrooke': [10000, 15000]}
-
-    def __init__(self, name=''):
+    def __init__(self, donors, name=''):
+        self.donors = donors
         self.name = name
         self.donation = 0
-        super().__init__()
 
     def view_donor_names(self):
         [print(name) for name in self.donors]
@@ -100,3 +81,14 @@ class DonorCollection(Donor):
             print(f'{str(k).ljust(20)}{str(v[0]).rjust(20)}{str(v[1]).rjust(20)}{str(v[2]).rjust(20)}')
 
 
+if __name__ == '__main__':
+    donors_test = {'William B': [120, 130, 50],
+                   'Sammy Maudlin': [500, 125, 670, 1000],
+                   'Bobby Bittman': [10],
+                   'Skip Bittman': [75, 125, 19],
+                   'Ashley Lashbrooke': [10000, 15000]}
+
+    d = Donor(donors_test)
+    d.add_donor('Boo', 100)
+    d1 = DonorCollection(donors_test)
+    print(d1.donors)
