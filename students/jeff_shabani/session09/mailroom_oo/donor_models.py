@@ -4,7 +4,7 @@ from collections import OrderedDict
 from operator import itemgetter
 from pathlib import Path
 
-from students.jeff_shabani.session09.write_a_letter import write_a_letter
+# from students.jeff_shabani.session09.write_a_letter import write_a_letter
 
 """
 Framework accessing multiple donors.
@@ -33,6 +33,12 @@ class Donor():
         self.donations.append(amount)
         self.donors[answer] = self.donations
 
+    def write_a_letter(self, name, amount):
+        return f'Dear {name},\n\nThank you for your kind donation of ${amount:,.0f}\n\n' \
+            f'Rest assured that these funds will be put to optimal use.\n\n' \
+            f'Best regards,\n' \
+            f'The Charitable Charities Team'
+
     def write_a_single_letter(self, answer, amount):
         """
         writes and saves a single letter as a txt file
@@ -41,7 +47,7 @@ class Donor():
         :return: text file and path object
         """
         with open(f'{answer}.txt', 'wt') as letter:
-            letter.write(write_a_letter(answer, amount))
+            letter.write(self.write_a_letter(answer, amount))
         letter_path = f'{Path.cwd()}//{answer}.txt'
         return Path(letter_path).exists()
 
@@ -49,7 +55,7 @@ class Donor():
         [print(name) for name in self.donors]
 
 
-class DonorCollection():
+class DonorCollection(Donor):
 
     donors = {'William B': [120, 130, 50],
               'Sammy Maudlin': [500, 125, 670, 1000],
@@ -60,6 +66,7 @@ class DonorCollection():
     def __init__(self, name=''):
         self.name = name
         self.donation = 0
+        super().__init__()
 
     def view_donor_names(self):
         [print(name) for name in self.donors]
@@ -74,7 +81,7 @@ class DonorCollection():
     def write_letters_to_all_donors(self):
         for donor, total in self.create_new_donors_dict().items():
             with open(f'{donor}.txt', 'wt') as letter:
-                letter.write(write_a_letter(donor, total[0]))
+                letter.write(Donor.write_a_letter(self, donor, total[0]))
 
     def create_report(self):
         header = f'{"Name".ljust(20)}{"| Total Donations".rjust(20)}{"| # of Donations".rjust(20)}' \

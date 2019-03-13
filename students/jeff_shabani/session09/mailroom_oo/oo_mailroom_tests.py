@@ -3,12 +3,12 @@ import os
 import unittest
 
 
-from donor import *
+from students.jeff_shabani.session09.mailroom_oo.donor_models import *
 
 ANSWER = 'New_Donor'
 AMOUNT = 4512
 
-class OOMailroonTests(unittest.TestCase):
+class DonorModelTests(unittest.TestCase):
 
     def test_add_donor(self):
         d = Donor()
@@ -37,3 +37,5 @@ class OOMailroonTests(unittest.TestCase):
         del d
 
 
+if __name__ == '__main__':
+    unittest.main()
