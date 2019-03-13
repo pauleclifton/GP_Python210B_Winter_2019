@@ -66,7 +66,6 @@ class DonorCollection(Donor):
     def __init__(self, name=''):
         self.name = name
         self.donation = 0
-        super().__init__()
 
     def view_donor_names(self):
         [print(name) for name in self.donors]
@@ -78,10 +77,16 @@ class DonorCollection(Donor):
         new_donors = {k: (sum(v), len(v), (len(v) / len(v))) for k, v in self.donors.items()}
         return OrderedDict(sorted(new_donors.items(), key=itemgetter(1), reverse=True))
 
+    def write_a_letter(self, name, amount):
+        return f'Dear {name},\n\nThank you for your kind donation of ${amount:,.0f}\n\n' \
+            f'Rest assured that these funds will be put to optimal use.\n\n' \
+            f'Best regards,\n' \
+            f'The Charitable Charities Team'
+
     def write_letters_to_all_donors(self):
         for donor, total in self.create_new_donors_dict().items():
             with open(f'{donor}.txt', 'wt') as letter:
-                letter.write(Donor.write_a_letter(self, donor, total[0]))
+                letter.write(self.write_a_letter(self, donor, total[0]))
 
     def create_report(self):
         header = f'{"Name".ljust(20)}{"| Total Donations".rjust(20)}{"| # of Donations".rjust(20)}' \
