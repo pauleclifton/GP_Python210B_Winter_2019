@@ -8,7 +8,7 @@
 import os
 import unittest
 
-from students.jeff_shabani.session09.donor_models import *
+from mailroom_oo.donor_models import *
 
 ANSWER = 'New_Donor'
 AMOUNT = 4512

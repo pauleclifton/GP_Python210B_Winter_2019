@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
-import os
 import unittest
 
-from cli_main import *
+from mailroom_oo.cli_main import *
 
 
 
