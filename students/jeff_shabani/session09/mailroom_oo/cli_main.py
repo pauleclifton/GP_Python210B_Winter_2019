@@ -75,7 +75,7 @@ class CommandLineInterface(Donor, DonorCollection):
             answer = input('Please enter a donor Full Name.')
 
             if answer.lower() == 'list':
-                self.view_donor_names(self)
+                DonorCollection.view_donor_names(self)
                 continue
 
             amount = CommandLineInterface.get_value(self, 'How much would this donor like to donate?', int)
@@ -83,11 +83,11 @@ class CommandLineInterface(Donor, DonorCollection):
             CommandLineInterface.set_letter_directory_path_path(self)
 
             if answer not in donors:
-                self.add_donor(self, answer, amount)
-                self.write_a_single_letter(self, answer, amount)
+                Donor.add_donor(self, answer, amount)
+                Donor.write_a_single_letter(self, answer, amount)
             else:
-                self.add_donor(self, answer, amount)
-                self.write_a_single_letter(self, answer, amount)
+                Donor.add_donor(self, answer, amount)
+                Donor.write_a_single_letter(self, answer, amount)
 
             print(f'\nThank you {answer.split()[0]} for you generous donation of ${amount:,.0f}\n')
             break
