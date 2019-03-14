@@ -84,7 +84,6 @@ class CommandLineInterface(DonorCollection):
         print('Tschüss')
         sys.exit()
 
-
     def dictionary_switch(self, response):
         """
         Create the switch dictionary. Tried a defaultdict here
@@ -104,7 +103,6 @@ class CommandLineInterface(DonorCollection):
             response = input(self.prompt)
             self.dictionary_switch(response)
 
-
     prompt = "\n".join(("Welcome to my charity!",
                         "Please select and option below:",
                         "1 - Send a Thank You to an individual",
@@ -112,8 +110,6 @@ class CommandLineInterface(DonorCollection):
                         "3 - Send letters to all donors",
                         "4 - Quit",
                         ">>> "))
-
-
 
 
 if __name__ == '__main__':
@@ -125,4 +121,3 @@ if __name__ == '__main__':
 
     run = CommandLineInterface(donors)
     run.main()
-
