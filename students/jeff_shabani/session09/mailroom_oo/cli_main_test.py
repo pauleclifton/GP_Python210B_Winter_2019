@@ -31,12 +31,6 @@ class OOMailroonTests(unittest.TestCase):
         self.assertEqual(clm.set_letter_directory_path_path(), expected)
         del clm
 
-    def test_set_letter_dir_path_2(self):
-        #requires tester input
-        clm = CommandLineInterface(donors_test)
-        expected = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session08'
-        self.assertEqual(clm.set_letter_directory_path_path(), expected)
-        del clm
 
 
 
