@@ -13,11 +13,7 @@ Contains mailroom user interaction functions
 # Python 210, Session 9
 # donors.py
 
-donors = {'William B': [120, 130, 50],
-          'Sammy Maudlin': [500, 125, 670, 1000],
-          'Bobby Bittman': [10],
-          'Skip Bittman': [75, 125, 19],
-          'Ashley Lashbrooke': [10000, 15000]}
+
 
 
 # prompt = input("\n".join(("Welcome to my charity!",
@@ -25,13 +21,12 @@ donors = {'William B': [120, 130, 50],
 #                           "1 - Send a Thank You to an individual",
 #                           "2 - Create a Report",
 #                           "3 - Send letters to all donors",
-#                           "4 - Quit",
-#                           ">>> ")))
+#                           "4 - Quit",#                           ">>> ")))
 
 
-class CommandLineInterface(Donor, DonorCollection):
+class CommandLineInterface(DonorCollection):
     def __init__(self):
-        super().__init__()
+        super().__init__(donors)
 
     def get_value(self, text, check_type):
         """
@@ -85,10 +80,10 @@ class CommandLineInterface(Donor, DonorCollection):
             CommandLineInterface.set_letter_directory_path_path(self)
 
             if answer not in donors:
-                Donor.add_donor(self, answer, amount)
+                DonorCollection.add_donor(self, answer, amount)
                 Donor.write_a_single_letter(self, answer, amount)
             else:
-                Donor.add_donor(self, answer, amount)
+                DonorCollection.add_donor(self, answer, amount)
                 Donor.write_a_single_letter(self, answer, amount)
 
             print(f'\nThank you {answer.split()[0]} for you generous donation of ${amount:,.0f}\n')
@@ -100,6 +95,12 @@ class CommandLineInterface(Donor, DonorCollection):
 
 
 if __name__ == '__main__':
+    donors = {'William B': [120, 130, 50],
+              'Sammy Maudlin': [500, 125, 670, 1000],
+              'Bobby Bittman': [10],
+              'Skip Bittman': [75, 125, 19],
+              'Ashley Lashbrooke': [10000, 15000]}
+
     c = CommandLineInterface()
     #c.add_donations_and_send_thank_you()
     c.create_report()

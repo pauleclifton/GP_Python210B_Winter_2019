@@ -17,7 +17,7 @@ donors_test = {'William B': [120, 130, 50],
 class DonorModelTests(unittest.TestCase):
 
     def test_add_donor(self):
-        d = Donor(donors_test)
+        d = DonorCollection(donors_test)
         d.add_donor(ANSWER, AMOUNT)
         expected = {f'{ANSWER}': [4512]}
         self.assertIn(ANSWER, d.donors)
@@ -35,7 +35,7 @@ class DonorModelTests(unittest.TestCase):
         os.remove('New_Donor.txt')
 
     def test_view_donor_names(self):
-        d = Donor(donors_test)
+        d = DonorCollection(donors_test)
         d.add_donor(ANSWER, AMOUNT)
         """
         test that function returns all donor names
@@ -45,7 +45,7 @@ class DonorModelTests(unittest.TestCase):
         del d
 
     def test_view_donor_names2(self):
-        d = Donor(donors_test)
+        d = DonorCollection(donors_test)
         d.add_donor(ANSWER, AMOUNT)
         dc = DonorCollection(donors_test)
         """
