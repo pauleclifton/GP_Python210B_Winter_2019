@@ -18,10 +18,8 @@ Framework accessing multiple donors.
 
 class Donor():
 
-    def __init__(self, donors=None, name=''):
-        self.name = name
+    def __init__(self, donors=None):
         self.donors = donors
-        self.donation = []
 
     def write_a_single_letter(self, answer, amount):
         """
@@ -36,12 +34,7 @@ class Donor():
         return Path(letter_path).exists()
 
 
-class DonorCollection():
-
-    def __init__(self, donors, name=''):
-        self.donors = donors
-        self.name = name
-        self.donation = 0
+class DonorCollection(Donor):
 
     def view_donor_names(self):
         [print(name) for name in self.donors]
@@ -88,4 +81,4 @@ if __name__ == '__main__':
 
     # d.write_a_single_letter('Billy', 60)
     d1 = DonorCollection(donors_test)
-    d1.write_letters_to_all_donors()
+    d1.view_donor_names()
