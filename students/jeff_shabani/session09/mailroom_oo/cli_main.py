@@ -8,25 +8,16 @@ from students.jeff_shabani.session09.mailroom_oo.donor_models import *
 Contains mailroom user interaction functions
 """
 
+
 # Jeff Shabani
 # March , 2019
 # Python 210, Session 9
 # donors.py
 
 
-
-
-# prompt = input("\n".join(("Welcome to my charity!",
-#                           "Please select and option below:",
-#                           "1 - Send a Thank You to an individual",
-#                           "2 - Create a Report",
-#                           "3 - Send letters to all donors",
-#                           "4 - Quit",#                           ">>> ")))
-
-
 class CommandLineInterface(DonorCollection):
-    def __init__(self):
-        super().__init__(donors)
+    # def __init__(self):
+    #     super().__init__(donors)
 
     def get_value(self, text, check_type):
         """
@@ -94,6 +85,37 @@ class CommandLineInterface(DonorCollection):
         sys.exit()
 
 
+    def dictionary_switch(self, response):
+        """
+        Create the switch dictionary. Tried a defaultdict here
+        but it doesn't seem to work as a switch.
+        """
+        functions = {'1': self.add_donations_and_send_thank_you,
+                     '2': self.create_report,
+                     '3': self.write_letters_to_all_donors,
+                     '4': self.quit_the_program}
+        try:
+            return functions[response]()
+        except KeyError:
+            print('Please make a valid selection', '\n')
+
+    def main(self):
+        while True:
+            response = input(self.prompt)
+            self.dictionary_switch(response)
+
+
+    prompt = "\n".join(("Welcome to my charity!",
+                        "Please select and option below:",
+                        "1 - Send a Thank You to an individual",
+                        "2 - Create a Report",
+                        "3 - Send letters to all donors",
+                        "4 - Quit",
+                        ">>> "))
+
+
+
+
 if __name__ == '__main__':
     donors = {'William B': [120, 130, 50],
               'Sammy Maudlin': [500, 125, 670, 1000],
@@ -101,14 +123,19 @@ if __name__ == '__main__':
               'Skip Bittman': [75, 125, 19],
               'Ashley Lashbrooke': [10000, 15000]}
 
-    c = CommandLineInterface()
-    #c.add_donations_and_send_thank_you()
-    c.create_report()
+    run = CommandLineInterface(donors)
+    run.main()
 
-    # prompt = input("\n".join(("Welcome to my charity!",
-    #                           "Please select and option below:",
-    #                           "1 - Send a Thank You to an individual",
-    #                           "2 - Create a Report",
-    #                           "3 - Send letters to all donors",
-    #                           "4 - Quit",
-    #                           ">>> ")))
+    #
+    # c = CommandLineInterface(donors)
+    # c.add_donations_and_send_thank_you()
+    # c.create_report()
+    # c.get_value('Enter 10', int)
+    #
+    # # prompt = input("\n".join(("Welcome to my charity!",
+    # #                           "Please select and option below:",
+    # #                           "1 - Send a Thank You to an individual",
+    # #                           "2 - Create a Report",
+    # #                           "3 - Send letters to all donors",
+    # #                           "4 - Quit",
+    # #                           ">>> ")))
