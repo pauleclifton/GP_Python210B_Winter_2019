@@ -126,16 +126,3 @@ if __name__ == '__main__':
     run = CommandLineInterface(donors)
     run.main()
 
-    #
-    # c = CommandLineInterface(donors)
-    # c.add_donations_and_send_thank_you()
-    # c.create_report()
-    # c.get_value('Enter 10', int)
-    #
-    # # prompt = input("\n".join(("Welcome to my charity!",
-    # #                           "Please select and option below:",
-    # #                           "1 - Send a Thank You to an individual",
-    # #                           "2 - Create a Report",
-    # #                           "3 - Send letters to all donors",
-    # #                           "4 - Quit",
-    # #                           ">>> ")))
