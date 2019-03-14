@@ -23,15 +23,6 @@ class Donor():
         self.donors = donors
         self.donation = []
 
-    def add_donor(self, answer, amount):
-        """
-        Adds a donor to the donors list
-        :param answer: name
-        :param amount: amount to donate
-        :return: updated donors dictionary
-        """
-        self.donors[answer] = amount
-
     def write_a_single_letter(self, answer, amount):
         """
         writes and saves a single letter as a txt file
@@ -44,9 +35,6 @@ class Donor():
         letter_path = f'{Path.cwd()}//{answer}.txt'
         return Path(letter_path).exists()
 
-    def view_donor_names(self):
-        [print(name) for name in self.donors]
-
 
 class DonorCollection():
 
@@ -57,6 +45,15 @@ class DonorCollection():
 
     def view_donor_names(self):
         [print(name) for name in self.donors]
+
+    def add_donor(self, answer, amount):
+        """
+        Adds a donor to the donors list
+        :param answer: name
+        :param amount: amount to donate
+        :return: updated donors dictionary
+        """
+        self.donors[answer] = amount
 
     def create_new_donors_dict(self):
         """
@@ -88,7 +85,7 @@ if __name__ == '__main__':
                    'Skip Bittman': [75, 125, 19],
                    'Ashley Lashbrooke': [10000, 15000]}
 
-    d = Donor(donors_test)
-    d.add_donor('Boo', 100)
+
+    # d.write_a_single_letter('Billy', 60)
     d1 = DonorCollection(donors_test)
-    print(d1.donors)
+    d1.write_letters_to_all_donors()
