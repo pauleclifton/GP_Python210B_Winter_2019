@@ -80,7 +80,8 @@ class CommandLineInterface(DonorCollection, Donor):
             print(f'\nThank you {answer.split()[0]} for you generous donation of ${amount:,.0f}\n')
             break
 
-    def quit_the_program(self):
+    @classmethod
+    def quit_the_program(cls):
         print('Tschüss')
         sys.exit()
 

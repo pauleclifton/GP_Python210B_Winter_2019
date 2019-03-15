@@ -9,8 +9,6 @@ from collections import OrderedDict
 from operator import itemgetter
 from pathlib import Path
 
-from students.jeff_shabani.session09.mailroom_oo.write_a_letter import write_a_letter
-
 """
 Framework accessing multiple donor classes.
 """
@@ -20,6 +18,13 @@ class Donor:
 
     def __init__(self, donors):
         self.donors = donors
+    @classmethod
+    def write_a_letter(cls, name, amount):
+        return f'Dear {name},\n\nThank you for your kind donation of ${amount:,.0f}\n\n' \
+            f'Rest assured that these funds will be put to optimal use.\n\n' \
+            f'Best regards,\n' \
+            f'The Charitable Charities Team'
+
 
     def write_a_single_letter(self, answer, amount):
         """
@@ -29,7 +34,7 @@ class Donor:
         :return: text file and path object
         """
         with open(f'{answer}.txt', 'wt') as letter:
-            letter.write(write_a_letter(answer, amount))
+            letter.write(self.write_a_letter(answer, amount))
         letter_path = f'{Path.cwd()}//{answer}.txt'
         return Path(letter_path).exists()
 
@@ -58,7 +63,7 @@ class DonorCollection(Donor):
     def write_letters_to_all_donors(self):
         for donor, total in self.create_new_donors_dict().items():
             with open(f'{donor}.txt', 'wt') as letter:
-                letter.write(write_a_letter(donor, total[0]))
+                letter.write(self.write_a_letter(donor, total[0]))
 
     def create_report(self):
         header = f'{"Name".ljust(20)}{"| Total Donations".rjust(20)}{"| # of Donations".rjust(20)}' \
