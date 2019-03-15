@@ -30,7 +30,7 @@ donors_test = {'Karsten Willems': [120, 130, 50],
 class OOMailroomTests(unittest.TestCase):
 
     def test_add_donor(self):
-        d = DonorCollection(donors_test)
+        d = CommandLineInterface(donors_test)
         d.add_donor(ANSWER, AMOUNT)
         self.assertIn(ANSWER, d.donors)
         self.assertIn(AMOUNT, d.donors[ANSWER])
@@ -39,7 +39,7 @@ class OOMailroomTests(unittest.TestCase):
         del d
 
     def test_write_a_letter(self):
-        d = Donor(donors_test)
+        d = CommandLineInterface(donors_test)
         """
         test that a single letter is written, the text is correct
         file and named correctly.
@@ -78,9 +78,31 @@ class OOMailroomTests(unittest.TestCase):
         old_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\mailroom_oo'
         os.chdir(old_dir)
 
+    def test_letter_text_from_all_donors_letter_creation(self):
+        """
+        test letter text from batch letter writing"""
+        lt = CommandLineInterface(donors_test)
+        new_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\letter_tests'
+        os.chdir(new_dir)
+        with open('Karsten Willems.txt', 'rt') as infile:
+            lines = infile.readlines()
+            self.assertEqual(lines[0], 'Dear Karsten Willems,\n')
+            self.assertEqual(lines[1], '\n')
+            self.assertEqual(lines[2], 'Thank you for your kind donation of $300\n')
+            self.assertEqual(lines[3], '\n')
+            self.assertEqual(lines[4], 'Rest assured that these funds will be put to optimal use.\n')
+            self.assertEqual(lines[5], '\n')
+            self.assertEqual(lines[6], 'Best regards,\n')
+            self.assertEqual(lines[7], 'The Charitable Charities Team')
+        letters_to_delete = ['Karsten Willems.txt','Sammy Maudlin.txt']
+        for letter in letters_to_delete:
+            os.remove(letter)
+        old_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\mailroom_oo'
+        os.chdir(old_dir)
+
 
     def test_write_letters_to_all_donors(self):
-        d = Donor(donors_test)
+        d = CommandLineInterface(donors_test)
         """
         test that a single letter is written, saved as a text
         file and named correctly.
@@ -90,7 +112,7 @@ class OOMailroomTests(unittest.TestCase):
         os.remove('New_Donor.txt')
 
     def test_view_donor_names(self):
-        d = DonorCollection(donors_test)
+        d = CommandLineInterface(donors_test)
         d.add_donor(ANSWER, AMOUNT)
         """
         test that function returns all donor names
