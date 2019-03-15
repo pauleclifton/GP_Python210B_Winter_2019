@@ -1,8 +1,16 @@
 #!/usr/bin/env python3
-import os
+
+# Jeff Shabani
+# March 2019
+# Python 210, Session 9
+# donor_models.py
+
 import unittest
 
-from students.jeff_shabani.session09.mailroom_oo.donor_models import *
+from students.jeff_shabani.session09.mailroom_oo.cli_main import *
+
+"""
+Test for mailroom_oo. Note: these are not complete."""
 
 ANSWER = 'New_Donor'
 AMOUNT = 4512
@@ -14,14 +22,13 @@ donors_test = {'William B': [120, 130, 50],
                'Ashley Lashbrooke': [10000, 15000]}
 
 
-class DonorModelTests(unittest.TestCase):
+class OOMailroomTests(unittest.TestCase):
 
     def test_add_donor(self):
         d = DonorCollection(donors_test)
         d.add_donor(ANSWER, AMOUNT)
-        expected = {f'{ANSWER}': [4512]}
         self.assertIn(ANSWER, d.donors)
-        self.assertIn(AMOUNT, d.donors.values())
+        self.assertIn(AMOUNT, d.donors[ANSWER])
         del d
 
     def test_write_a_letter(self):
@@ -54,6 +61,20 @@ class DonorModelTests(unittest.TestCase):
         self.assertEqual(dc.view_donor_names(),
                          print('\nWilliam B\nSammy Maudlin\nSkip Bittman\nAshley Lashbrooke\nNew_Donor'))
         del d
+
+    def test_get_value(self):
+        # requires tester input
+        clm = CommandLineInterface(donors_test)
+        expected = 10
+        self.assertEqual(clm.get_value('Enter 10', int), expected)
+        del clm
+
+    def test_set_letter_dir_path(self):
+        # requires tester input
+        clm = CommandLineInterface(donors_test)
+        expected = os.getcwd()
+        self.assertEqual(clm.set_letter_directory_path_path(), expected)
+        del clm
 
 
 if __name__ == '__main__':

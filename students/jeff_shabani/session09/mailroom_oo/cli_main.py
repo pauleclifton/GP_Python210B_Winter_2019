@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+# Jeff Shabani
+# March 2019
+# Python 210, Session 9
+# cli_main.py
+
 import os
 import sys
 from students.jeff_shabani.session09.mailroom_oo.donor_models import *
@@ -9,15 +14,10 @@ Contains mailroom user interaction functions
 """
 
 
-# Jeff Shabani
-# March , 2019
-# Python 210, Session 9
-# donors.py
-
-
-class CommandLineInterface(DonorCollection):
-    # def __init__(self):
-    #     super().__init__(donors)
+class CommandLineInterface(DonorCollection, Donor):
+    def __init__(self, donors):
+        self.donors = donors
+        super().__init__(donors)
 
     def get_value(self, text, check_type):
         """
@@ -70,7 +70,7 @@ class CommandLineInterface(DonorCollection):
 
             CommandLineInterface.set_letter_directory_path_path(self)
 
-            if answer not in donors:
+            if answer not in self.donors:
                 DonorCollection.add_donor(self, answer, amount)
                 Donor.write_a_single_letter(self, answer, amount)
             else:
@@ -113,11 +113,13 @@ class CommandLineInterface(DonorCollection):
 
 
 if __name__ == '__main__':
-    donors = {'William B': [120, 130, 50],
-              'Sammy Maudlin': [500, 125, 670, 1000],
-              'Bobby Bittman': [10],
-              'Skip Bittman': [75, 125, 19],
-              'Ashley Lashbrooke': [10000, 15000]}
 
-    run = CommandLineInterface(donors)
+    # this stuff was used for quick tests
+    donors_test = {'Karsten Willems': [120, 130, 50],
+                   'Sammy Maudlin': [500, 125, 670, 1000],
+                   'Bobby Bittman': [10],
+                   'Skip Bittman': [75, 125, 19],
+                   'Ashley Lashbrooke': [10000, 15000]}
+
+    run = CommandLineInterface(donors_test)
     run.main()

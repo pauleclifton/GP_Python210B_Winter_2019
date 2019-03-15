@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+# Jeff Shabani
+# March 2019
+# Python 210, Session 9
+# donor_models.py
+
 from collections import OrderedDict
 from operator import itemgetter
 from pathlib import Path
@@ -7,20 +12,14 @@ from pathlib import Path
 from students.jeff_shabani.session09.mailroom_oo.write_a_letter import write_a_letter
 
 """
-Framework accessing multiple donors.
+Framework accessing multiple donor classes.
 """
 
 
-# Jeff Shabani
-# March 1st, 2019
-# Python 210, Session 9
-# donors.py
-
-class Donor():
+class Donor:
 
     def __init__(self, donors):
         self.donors = donors
-
 
     def write_a_single_letter(self, answer, amount):
         """
@@ -71,7 +70,6 @@ class DonorCollection(Donor):
         for k, v in self.create_new_donors_dict().items():
             print(f'{str(k).ljust(20)}{str(v[0]).rjust(20)}{str(v[1]).rjust(20)}{str(v[2]).rjust(20)}')
 
-
 # if __name__ == '__main__':
 #     donors_test = {'William B': [120, 130, 50],
 #                    'Sammy Maudlin': [500, 125, 670, 1000],
@@ -85,6 +83,3 @@ class DonorCollection(Donor):
 #     dt.create_report()
 #     dt.write_letters_to_all_donors()
 #     dt.write_a_single_letter('Yo', 90)
-
-
-
