@@ -8,6 +8,8 @@
 import mock
 import unittest
 
+import students
+from mailroom_oo import cli_main
 from students.jeff_shabani.session09.mailroom_oo.cli_main import *
 
 """
@@ -70,10 +72,16 @@ class OOMailroomTests(unittest.TestCase):
     #     self.assertEqual(clm.get_value('Enter 10', int), expected)
     #     del clm
 
-    c = CommandLineInterface(donors_test)
-    @mock.patch('builtins.input', mock.Mock(return_value = '54'))
-    def test_get_value_2(self):
-        self.assertEqual(CommandLineInterface.get_value(self, 'Enter a value:', int), 54)
+    # c = CommandLineInterface(donors_test)
+    # @mock.patch('builtins.input', mock.Mock(return_value = '54'))
+    # def test_get_value_2(self):
+    #     self.assertEqual(CommandLineInterface.get_value(self, 'Enter a value:', int), 54)
+
+    @mock.patch('students.jeff_shabani.session09.mailroom_oo.cli_main.input', mock.Mock(return_value='54'))
+    def test_get_value_3(self):
+        self.assertEqual(
+            students.jeff_shabani.session09.mailroom_oo.cli_main.CommandLineInterface.get_value(self, 'Enter a value:',
+                                                                                                int), 54)
 
 
     # def test_set_letter_dir_path(self):
