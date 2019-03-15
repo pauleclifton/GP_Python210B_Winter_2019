@@ -6,11 +6,16 @@
 # donor_models.py
 
 import mock
+import os
 import unittest
 
 import students
 from mailroom_oo import cli_main
 from students.jeff_shabani.session09.mailroom_oo.cli_main import *
+
+new_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\letter_tests'
+os.chdir(new_dir)
+print(os.getcwd())
 
 """
 Test for mailroom_oo. Note: these are not complete."""
@@ -50,6 +55,24 @@ class OOMailroomTests(unittest.TestCase):
             self.assertEqual(lines[7], 'The Charitable Charities Team')
         del d
         os.remove('New_Donor.txt')
+
+
+    def test_all_donor_letters_created(self):
+        lt = CommandLineInterface(donors_test)
+        new_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\letter_tests'
+        os.chdir(new_dir)
+        lt.write_letters_to_all_donors()
+        cd = os.getcwd()
+        for items in os.walk(cd):
+            files = [item for item in items[2]]
+        letters_to_write = ['Karsten Willems.txt', 'read_letters.py', 'Sammy Maudlin.txt', 'New_Donor.txt']
+        for file in files:
+            self.assertIn(file, letters_to_write)
+        os.remove(letters_to_write[0])
+        for letter in letters_to_write[2:]:
+            os.remove(letter)
+        old_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\mailroom_oo'
+        os.chdir(old_dir)
 
 
     def test_write_letters_to_all_donors(self):
