@@ -18,12 +18,9 @@ Test for mailroom_oo. Note: these are not complete."""
 ANSWER = 'New_Donor'
 AMOUNT = 4512
 
-donors_test = {'William B': [120, 130, 50],
-               'Sammy Maudlin': [500, 125, 670, 1000],
-               'Bobby Bittman': [10],
-               'Skip Bittman': [75, 125, 19],
-               'Ashley Lashbrooke': [10000, 15000]}
-
+donors_test = {'Karsten Willems': [120, 130, 50],
+               'Sammy Maudlin': [500, 125, 670, 1000]
+               }
 
 class OOMailroomTests(unittest.TestCase):
 
@@ -35,6 +32,27 @@ class OOMailroomTests(unittest.TestCase):
         del d
 
     def test_write_a_letter(self):
+        d = Donor(donors_test)
+        """
+        test that a single letter is written, the text is correct
+        file and named correctly.
+        """
+        self.assertEqual(d.write_a_single_letter(ANSWER, AMOUNT), True)
+        with open('New_Donor.txt', 'rt') as infile:
+            lines = infile.readlines()
+            self.assertEqual(lines[0], f'Dear {ANSWER},\n')
+            self.assertEqual(lines[1], '\n')
+            self.assertEqual(lines[2], f'Thank you for your kind donation of ${AMOUNT:,.0f}\n')
+            self.assertEqual(lines[3], '\n')
+            self.assertEqual(lines[4], 'Rest assured that these funds will be put to optimal use.\n')
+            self.assertEqual(lines[5], '\n')
+            self.assertEqual(lines[6], 'Best regards,\n')
+            self.assertEqual(lines[7], 'The Charitable Charities Team')
+        del d
+        os.remove('New_Donor.txt')
+
+
+    def test_write_letters_to_all_donors(self):
         d = Donor(donors_test)
         """
         test that a single letter is written, saved as a text
@@ -54,16 +72,6 @@ class OOMailroomTests(unittest.TestCase):
                          print('\nWilliam B\nSammy Maudlin\nSkip Bittman\nAshley Lashbrooke\nNew_Donor'))
         del d
 
-    def test_view_donor_names2(self):
-        d = DonorCollection(donors_test)
-        d.add_donor(ANSWER, AMOUNT)
-        dc = DonorCollection(donors_test)
-        """
-        test that function returns all donor names
-        """
-        self.assertEqual(dc.view_donor_names(),
-                         print('\nWilliam B\nSammy Maudlin\nSkip Bittman\nAshley Lashbrooke\nNew_Donor'))
-        del d
 
     @mock.patch('builtins.input', mock.Mock(return_value='54'))
     def test_get_value_2(self):
@@ -81,12 +89,13 @@ class OOMailroomTests(unittest.TestCase):
     def test_get_wrong_input(self):
         self.assertEqual(CommandLineInterface.get_value(self, 'Enter a value:', str), 'Incorrect data type')
 
-    # def test_set_letter_dir_path(self):
-    #     # requires tester input
-    #     clm = CommandLineInterface(donors_test)
-    #     expected = os.getcwd()
-    #     self.assertEqual(clm.set_letter_directory_path_path(), expected)
-    #     del clm
+    @mock.patch('builtins.input', mock.Mock(return_value=None))
+    def test_set_letter_dir_path_no_change(self):
+        #tests for that letter patch is cwd
+        expected = os.getcwd()
+        self.assertEqual(CommandLineInterface.set_letter_directory_path_path(self), expected)
+
+
 
 
 if __name__ == '__main__':

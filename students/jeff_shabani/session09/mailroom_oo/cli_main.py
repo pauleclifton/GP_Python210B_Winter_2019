@@ -117,10 +117,8 @@ if __name__ == '__main__':
 
     # this stuff was used for quick tests
     donors_test = {'Karsten Willems': [120, 130, 50],
-                   'Sammy Maudlin': [500, 125, 670, 1000],
-                   'Bobby Bittman': [10],
-                   'Skip Bittman': [75, 125, 19],
-                   'Ashley Lashbrooke': [10000, 15000]}
+                   'Sammy Maudlin': [500, 125, 670, 1000]
+                   }
 
     run = CommandLineInterface(donors_test)
     run.main()

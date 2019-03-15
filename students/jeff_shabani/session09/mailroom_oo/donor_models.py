@@ -74,17 +74,3 @@ class DonorCollection(Donor):
         # get donors and totals from new_donors dictionary
         for k, v in self.create_new_donors_dict().items():
             print(f'{str(k).ljust(20)}{str(v[0]).rjust(20)}{str(v[1]).rjust(20)}{str(v[2]).rjust(20)}')
-
-# if __name__ == '__main__':
-#     donors_test = {'William B': [120, 130, 50],
-#                    'Sammy Maudlin': [500, 125, 670, 1000],
-#                    'Bobby Bittman': [10],
-#                    'Skip Bittman': [75, 125, 19],
-#                    'Ashley Lashbrooke': [10000, 15000]}
-#
-#     dt = DonorCollection(donors_test)
-#     #dt.create_report()
-#     dt.add_donor('Joe', 100)
-#     dt.create_report()
-#     dt.write_letters_to_all_donors()
-#     dt.write_a_single_letter('Yo', 90)
