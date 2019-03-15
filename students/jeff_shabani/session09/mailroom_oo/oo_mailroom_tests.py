@@ -34,6 +34,8 @@ class OOMailroomTests(unittest.TestCase):
         d.add_donor(ANSWER, AMOUNT)
         self.assertIn(ANSWER, d.donors)
         self.assertIn(AMOUNT, d.donors[ANSWER])
+        #remove new donor from dictionary
+        del donors_test[ANSWER]
         del d
 
     def test_write_a_letter(self):
@@ -58,6 +60,8 @@ class OOMailroomTests(unittest.TestCase):
 
 
     def test_all_donor_letters_created(self):
+        """
+        test that letters were written to all donors"""
         lt = CommandLineInterface(donors_test)
         new_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\letter_tests'
         os.chdir(new_dir)
@@ -65,12 +69,12 @@ class OOMailroomTests(unittest.TestCase):
         cd = os.getcwd()
         for items in os.walk(cd):
             files = [item for item in items[2]]
-        letters_to_write = ['Karsten Willems.txt', 'read_letters.py', 'Sammy Maudlin.txt', 'New_Donor.txt']
+        letters_to_write = ['Karsten Willems.txt', 'read_letters.py', 'Sammy Maudlin.txt']
         for file in files:
             self.assertIn(file, letters_to_write)
-        os.remove(letters_to_write[0])
-        for letter in letters_to_write[2:]:
-            os.remove(letter)
+        # os.remove(letters_to_write[0])
+        # for letter in letters_to_write[2]:
+        #     os.remove(letter)
         old_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\mailroom_oo'
         os.chdir(old_dir)
 
