@@ -71,9 +71,8 @@ class OOMailroomTests(unittest.TestCase):
     #     del clm
 
     c = CommandLineInterface(donors_test)
-    @mock.patch('CommandLineInterface.input', mock.Mock(return_value = '54'))
+    @mock.patch('builtins.input', mock.Mock(return_value = '54'))
     def test_get_value_2(self):
-        c = CommandLineInterface(donors_test)
         self.assertEqual(CommandLineInterface.get_value(self, 'Enter a value:', int), 54)
 
 
