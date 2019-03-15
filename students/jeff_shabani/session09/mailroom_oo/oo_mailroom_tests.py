@@ -65,17 +65,10 @@ class OOMailroomTests(unittest.TestCase):
                          print('\nWilliam B\nSammy Maudlin\nSkip Bittman\nAshley Lashbrooke\nNew_Donor'))
         del d
 
-    # def test_get_value(self):
-    #     # requires tester input
-    #     clm = CommandLineInterface(donors_test)
-    #     expected = 10
-    #     self.assertEqual(clm.get_value('Enter 10', int), expected)
-    #     del clm
+    @mock.patch('builtins.input', mock.Mock(return_value='54'))
+    def test_get_value_2(self):
+        self.assertEqual(CommandLineInterface.get_value(self, 'Enter a value:', int), 54)
 
-    # c = CommandLineInterface(donors_test)
-    # @mock.patch('builtins.input', mock.Mock(return_value = '54'))
-    # def test_get_value_2(self):
-    #     self.assertEqual(CommandLineInterface.get_value(self, 'Enter a value:', int), 54)
 
     @mock.patch('students.jeff_shabani.session09.mailroom_oo.cli_main.input', mock.Mock(return_value='54'))
     def test_get_value_3(self):
@@ -83,6 +76,10 @@ class OOMailroomTests(unittest.TestCase):
             students.jeff_shabani.session09.mailroom_oo.cli_main.CommandLineInterface.get_value(self, 'Enter a value:',
                                                                                                 int), 54)
 
+    @mock.patch('builtins.input', mock.Mock(return_value='54'))
+    @unittest.expectedFailure
+    def test_get_wrong_input(self):
+        self.assertEqual(CommandLineInterface.get_value(self, 'Enter a value:', str), 'Incorrect data type')
 
     # def test_set_letter_dir_path(self):
     #     # requires tester input
