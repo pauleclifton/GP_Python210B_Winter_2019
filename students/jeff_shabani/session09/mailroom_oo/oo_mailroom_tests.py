@@ -6,7 +6,9 @@
 # donor_models.py
 
 import mock
+import shutil
 import students
+import tempfile
 import unittest
 
 
@@ -36,11 +38,11 @@ class OOMailroomTests(unittest.TestCase):
         del d
 
     def test_write_a_letter(self):
+        """
+        Test that a single letter is written, the text is correct
+        file and named correctly. Letter is deleted after test completion.
+        """
         d = CommandLineInterface(donors_test)
-        """
-        test that a single letter is written, the text is correct
-        file and named correctly.
-        """
         self.assertEqual(d.write_a_single_letter(ANSWER, AMOUNT), True)
         with open('New_Donor.txt', 'rt') as infile:
             lines = infile.readlines()
@@ -55,10 +57,19 @@ class OOMailroomTests(unittest.TestCase):
         del d
         os.remove('New_Donor.txt')
 
+    def test_new_dictionary(self):
+        """
+        Tests content of new dictionary used for report."""
+        d = CommandLineInterface(donors_test)
+        expected = {'Karsten Willems': (300, 3, 1.0), 'Sammy Maudlin': (2295, 4, 1.0)}
+        self.assertDictEqual(d.create_new_donors_dict(), expected)
+        del d
 
     def test_all_donor_letters_created(self):
         """
-        test that letters were written to all donors"""
+        Test that letters were written to all donors. Creates list of
+        letters and compares that list against list of expected letters.
+        """
         lt = CommandLineInterface(donors_test)
         new_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\letter_tests'
         os.chdir(new_dir)
@@ -69,15 +80,16 @@ class OOMailroomTests(unittest.TestCase):
         letters_to_write = ['Karsten Willems.txt', 'read_letters.py', 'Sammy Maudlin.txt']
         for file in files:
             self.assertIn(file, letters_to_write)
-        # os.remove(letters_to_write[0])
-        # for letter in letters_to_write[2]:
-        #     os.remove(letter)
         old_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\mailroom_oo'
         os.chdir(old_dir)
 
     def test_letter_text_from_all_donors_letter_creation(self):
         """
-        test letter text from batch letter writing"""
+        Test letter text from batch letter writing. Test accuracy
+        of content of single letter, with the assumption that the
+        text for all letters will be the same. Letters are deleted
+        after tests are run.
+        """
         lt = CommandLineInterface(donors_test)
         new_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\letter_tests'
         os.chdir(new_dir)
@@ -98,12 +110,20 @@ class OOMailroomTests(unittest.TestCase):
         os.chdir(old_dir)
 
     def test_view_donor_names(self):
-        """test console output of donors names"""
+        """Test console output of donors names"""
         d = CommandLineInterface(donors_test)
         with patch ('sys.stdout', new=StringIO()) as mocked_output:
             d.view_donor_names()
             self.assertEqual(mocked_output.getvalue().strip(), f'Karsten Willems\nSammy Maudlin')
         del d
+
+    def test_program_quit(self):
+        """Test that the program quits properly"""
+        d = CommandLineInterface(donors_test)
+        with self.assertRaises(SystemExit):
+            d.quit_the_program()
+        del d
+
 
 
     @mock.patch('builtins.input', mock.Mock(return_value='54'))
