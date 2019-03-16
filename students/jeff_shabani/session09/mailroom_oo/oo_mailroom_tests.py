@@ -25,6 +25,8 @@ AMOUNT = 4512
 donors_test = {'Karsten Willems': [120, 130, 50],
                'Sammy Maudlin': [500, 125, 670, 1000]
                }
+#use for testing setting new letter path
+new_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\letter_tests'
 
 class OOMailroomTests(unittest.TestCase):
 
@@ -61,7 +63,7 @@ class OOMailroomTests(unittest.TestCase):
         """
         Tests content of new dictionary used for report."""
         d = CommandLineInterface(donors_test)
-        expected = {'Karsten Willems': (300, 3, 1.0), 'Sammy Maudlin': (2295, 4, 1.0)}
+        expected = {k: (sum(v), len(v), (sum(v) / len(v))) for k, v in donors_test.items()}
         self.assertDictEqual(d.create_new_donors_dict(), expected)
         del d
 
@@ -129,37 +131,31 @@ class OOMailroomTests(unittest.TestCase):
         d = CommandLineInterface(donors_test)
         header = f'{"Name".ljust(20)}{"| Total Donations".rjust(20)}{"| # of Donations".rjust(20)}' \
             f'{"| Average Donation".rjust(20)}'
+
         dashes = '-' * len(header)
         donor_one_name= 'Sammy Maudlin'
         donor_one_total = 2295
         donor_one_count = 4
-        donor_one_mean = 1.0
-        
+        donor_one_mean = 573.75
+
         donor_zwei_name= 'Karsten Willems'
         donor_zwei_total = 300
         donor_zwei_count = 3
-        donor_zwei_mean = 1.0
+        donor_zwei_mean = 100.0
 
-        first_line = f'{donor_one_name.ljust(20)}{str(donor_one_total).rjust(20)}{str(donor_one_count).rjust(20)}{str(donor_one_mean).rjust(20)}'
-        zweite_line = f'{donor_zwei_name.ljust(20)}{str(donor_zwei_total).rjust(20)}{str(donor_zwei_count).rjust(20)}{str(donor_zwei_mean).rjust(20)}'
+        first_line = f'{donor_one_name.ljust(20)}{str(donor_one_total).rjust(20)}{str(donor_one_count).rjust(20)}' \
+            f'{str(donor_one_mean).rjust(20)}'
+        zweite_line = f'{donor_zwei_name.ljust(20)}{str(donor_zwei_total).rjust(20)}{str(donor_zwei_count).rjust(20)}' \
+            f'{str(donor_zwei_mean).rjust(20)}'
 
         with patch ('sys.stdout', new=StringIO()) as mocked_output:
             d.create_report()
             self.assertEqual(mocked_output.getvalue().strip(), f'{header}\n{dashes}\n{first_line}\n{zweite_line}')
         del d
 
-
-
     @mock.patch('builtins.input', mock.Mock(return_value='54'))
     def test_get_value_2(self):
         self.assertEqual(CommandLineInterface.get_value(self, 'Enter a value:', int), 54)
-
-
-    @mock.patch('students.jeff_shabani.session09.mailroom_oo.cli_main.input', mock.Mock(return_value='54'))
-    def test_get_value_3(self):
-        self.assertEqual(
-            students.jeff_shabani.session09.mailroom_oo.cli_main.CommandLineInterface.get_value(self, 'Enter a value:',
-                                                                                                int), 54)
 
     @mock.patch('builtins.input', mock.Mock(return_value='54'))
     @unittest.expectedFailure
@@ -171,6 +167,15 @@ class OOMailroomTests(unittest.TestCase):
         #tests for that letter patch is cwd
         expected = os.getcwd()
         self.assertEqual(CommandLineInterface.set_letter_directory_path_path(self), expected)
+
+
+    @mock.patch('builtins.input', mock.Mock(return_value=new_dir))
+    def test_set_letter_dir_path_new(self):
+        d = CommandLineInterface(donors_test)
+        os.chdir(new_dir)
+        expected = os.getcwd()
+        d.set_letter_directory_path_path()
+        self.assertEqual(new_dir, expected)
 
 
 

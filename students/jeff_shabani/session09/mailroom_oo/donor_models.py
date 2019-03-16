@@ -57,7 +57,7 @@ class DonorCollection(Donor):
         """
         dictionay comprehension of donors with sum, len, and average of values.
         """
-        new_donors = {k: (sum(v), len(v), (len(v) / len(v))) for k, v in self.donors.items()}
+        new_donors = {k: (sum(v), len(v), (sum(v) / len(v))) for k, v in self.donors.items()}
         return OrderedDict(sorted(new_donors.items(), key=itemgetter(1), reverse=True))
 
     def write_letters_to_all_donors(self):
