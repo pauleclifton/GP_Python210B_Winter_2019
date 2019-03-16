@@ -164,10 +164,10 @@ class OOMailroomTests(unittest.TestCase):
 
     @mock.patch('builtins.input', mock.Mock(return_value=None))
     def test_set_letter_dir_path_no_change(self):
-        #tests for that letter patch is cwd
+        """
+        tests for that letter patch is cwd when no path is entered"""
         expected = os.getcwd()
         self.assertEqual(CommandLineInterface.set_letter_directory_path_path(self), expected)
-
 
     @mock.patch('builtins.input', mock.Mock(return_value=new_dir))
     def test_set_letter_dir_path_new(self):
@@ -176,8 +176,7 @@ class OOMailroomTests(unittest.TestCase):
         expected = os.getcwd()
         d.set_letter_directory_path_path()
         self.assertEqual(new_dir, expected)
-
-
+        del d
 
 
 if __name__ == '__main__':
