@@ -148,6 +148,16 @@ class OOMailroomTests(unittest.TestCase):
             self.assertEqual(mocked_output.getvalue().strip(), f'{header}\n{dashes}\n{first_line}\n{zweite_line}')
         del d
 
+    # def test_add_donor_and_generate_report(self):
+    #     d = CommandLineInterface(donors_test)
+    #     d.add_donor(ANSWER, AMOUNT)
+    #     print('This is the new dict',donors_test)
+    #     # expected = {k: (sum(v), len(v), (sum(v) / len(v))) for k, v in donors_test.items()}
+    #     # self.assertDictEqual(d.create_new_donors_dict(), expected)
+    #     # del d
+
+
+
     @mock.patch('builtins.input', mock.Mock(return_value='54'))
     def test_get_value_2(self):
         self.assertEqual(CommandLineInterface.get_value(self, 'Enter a value:', int), 54)
