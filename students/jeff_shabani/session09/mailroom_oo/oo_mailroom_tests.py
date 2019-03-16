@@ -6,16 +6,13 @@
 # donor_models.py
 
 import mock
-import os
+import students
 import unittest
 
-import students
-from mailroom_oo import cli_main
-from students.jeff_shabani.session09.mailroom_oo.cli_main import *
 
-new_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\letter_tests'
-os.chdir(new_dir)
-print(os.getcwd())
+from io import StringIO
+from cli_main import *
+from unittest.mock import patch
 
 """
 Test for mailroom_oo. Note: these are not complete."""
@@ -100,25 +97,12 @@ class OOMailroomTests(unittest.TestCase):
         old_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\mailroom_oo'
         os.chdir(old_dir)
 
-
-    def test_write_letters_to_all_donors(self):
-        d = CommandLineInterface(donors_test)
-        """
-        test that a single letter is written, saved as a text
-        file and named correctly.
-        """
-        self.assertEqual(d.write_a_single_letter(ANSWER, AMOUNT), True)
-        del d
-        os.remove('New_Donor.txt')
-
     def test_view_donor_names(self):
+        """test console output of donors names"""
         d = CommandLineInterface(donors_test)
-        d.add_donor(ANSWER, AMOUNT)
-        """
-        test that function returns all donor names
-        """
-        self.assertEqual(d.view_donor_names(),
-                         print('\nWilliam B\nSammy Maudlin\nSkip Bittman\nAshley Lashbrooke\nNew_Donor'))
+        with patch ('sys.stdout', new=StringIO()) as mocked_output:
+            d.view_donor_names()
+            self.assertEqual(mocked_output.getvalue().strip(), f'Karsten Willems\nSammy Maudlin')
         del d
 
 

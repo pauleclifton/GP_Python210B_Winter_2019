@@ -5,9 +5,10 @@
 # Python 210, Session 9
 # cli_main.py
 
+
 import os
 import sys
-from students.jeff_shabani.session09.mailroom_oo.donor_models import *
+from donor_models import *
 
 """
 Contains mailroom user interaction functions
