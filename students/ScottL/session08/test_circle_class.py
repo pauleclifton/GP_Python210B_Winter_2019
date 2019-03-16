@@ -39,13 +39,13 @@ def test_repr():
 def test_add():
     cir1 = circle_class.Circle(3)
     cir2 = circle_class.Circle(4)
-    assert cir1 + cir2 == "Circle(7)"
+    assert cir1 + cir2 == circle_class.Circle(7)
 
 
 def test_multiply():
     cir1 = circle_class.Circle(4)
-    assert cir1 * 2 == "Circle(8)"
-    assert 2 * cir1 == "Circle(8)"
+    assert cir1 * 2 == circle_class.Circle(8)
+    assert 2 * cir1 == circle_class.Circle(8)
 
 
 def test_less():
@@ -79,8 +79,8 @@ def test_sphere():
     assert round(sph1.area, 1) == round(4 * 3.1415 * 3 ** 2, 1)
     assert sph1.__str__() == "Sphere with a radius of: 3"
     assert sph1.__repr__() == "Sphere(3)"
-    assert sph1 + sph2 == "Sphere(7)"
-    assert sph1 * 2 == "Sphere(6)"
-    assert 4 * sph1 == "Sphere(12)"
+    assert sph1 + sph2 == circle_class.Sphere(7)
+    assert sph1 * 2 == circle_class.Sphere(6)
+    assert 4 * sph1 == circle_class.Sphere(12)
     assert sph1 < sph2
     assert sph2 > sph1

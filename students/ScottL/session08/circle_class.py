@@ -39,10 +39,10 @@ class Circle:
         return f"Circle({self.radius})"
 
     def __add__(self, other):
-        return f"Circle({self.radius + other.radius})"
+        return Circle(self.radius + other.radius)
 
     def __mul__(self, other):
-        return f"Circle({self.radius * other})"
+        return Circle(self.radius * other)
 
     __rmul__ = __mul__
 
@@ -66,7 +66,7 @@ class Sphere(Circle):
 
     @property
     def area(self):
-        """Return the surface area of a sphere calculated from the radius property"""
+        """Return the surface area of a sphere calculated from the radius property."""
         return 4 * math.pi * self.radius ** 2
 
     def __str__(self):
@@ -76,9 +76,9 @@ class Sphere(Circle):
         return f"Sphere({self.radius})"
 
     def __add__(self, other):
-        return f"Sphere({self.radius + other.radius})"
+        return Sphere(self.radius + other.radius)
 
     def __mul__(self, other):
-        return f"Sphere({self.radius * other})"
+        return Sphere(self.radius * other)
 
     __rmul__ = __mul__

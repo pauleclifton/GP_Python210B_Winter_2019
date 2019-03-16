@@ -1,7 +1,5 @@
 import sys  # imports go at the top of the file
 
-
-
 # Data Structure
 donor_db = {"William Gates, III": [653772.32, 12.17],
             "Jeff Bezos": [877.33],
@@ -10,26 +8,25 @@ donor_db = {"William Gates, III": [653772.32, 12.17],
             "Elon Musk": [2263.23, 3300.87, 15432.0],
             }
 
-
 ''' First Comprehesion'''
 new_donor_dic = \
-     {d: donors for d, donors in donor_db.items()}
+    {d: donors for d, donors in donor_db.items()}
 
 # Input/Output
 prompt = "\n".join(("Mail Distribution Center!",
-          "Please choose from below options:",
-          "1 - Send a Thank You to a single donor",
-          "2 - Create a Report",
-          "3 - Send letters to all donors",
-          "4 - Exit",
-          ">>> "))
+                    "Please choose from below options:",
+                    "1 - Send a Thank You to a single donor",
+                    "2 - Create a Report",
+                    "3 - Send letters to all donors",
+                    "4 - Exit",
+                    ">>> "))
 
 # Features
 ''' Second Comprehension'''
 dict_comp = {d for d in donor_db.keys()}
 
-def view_donor_names():
 
+def view_donor_names():
     for donor in donor_db.keys():
         print(donor)
 
@@ -41,6 +38,7 @@ def write_a_letter(donor, amount):
         f"The Fundraising Committee"
     return letter
 
+
 def write_a_letter_all(donor):
     letter = f"Dear {donor},\n\nThank you for your kind donation. \n\n" \
         f"It will be put to very good use.\n\n" \
@@ -49,14 +47,11 @@ def write_a_letter_all(donor):
     return letter
 
 
-
 def dir_for_letter():
-
     input("Hit <Enter/Return> key to save to the current working directory.")
 
 
 def thank_you_letter():
-
     answer = input("Please enter Full Name.>>>")
     if answer.lower() == 'list':
         for donor in donor_db.keys():
@@ -68,7 +63,6 @@ def thank_you_letter():
             add_donor(answer)
 
 
-
 def letter_to_all_donors():
     dir_for_letter()
     for donor in donor_db.keys():
@@ -76,10 +70,10 @@ def letter_to_all_donors():
             letter.write(switch_func_dict.get(1)(donor))
 
 
-
 def get_letter_text(donor):
     letter_to_all_donors()
     return f"{donor}, Thank you for your kind donation"
+
 
 def get_value(text, check_type):
     while True:
@@ -90,8 +84,8 @@ def get_value(text, check_type):
             print("Invalid value. Please try again")
             continue
 
-def current_donor(donor):
 
+def current_donor(donor):
     amount = get_value("Please enter donor amount.>>>", float)
     donor_db[donor].append(float(amount))
     dir_for_letter()
@@ -100,13 +94,11 @@ def current_donor(donor):
     print('Thanks, {} for your generous donation.'.format(donor))
 
 
-
 def sort_key(donor_db):
     return donor_db[:]
 
 
 def add_donor(new_donor):
-
     donor_amount = get_value("What is the donation amount?.>>>", float)
     donor_db[new_donor] = [float(donor_amount)]
     print(donor_db)
@@ -117,25 +109,34 @@ def add_donor(new_donor):
 
 
 def report():
-    summary = []
+
     headers = ["Donor Name", "Total Given", "Num Gifts", "Average Gift"]
     print()
     print("{:20} | {:10} | {:10} | {}".format(headers[0], headers[1], headers[2], headers[3]))
     print("-" * 80)
 
+    summary = create_summary()
+    for i in summary:
+        print("{:20}  ${:>12,.2f}{:>10}     ${:>14,.2f}".format(i[0], i[1], i[2], i[3]))
+        print("")
+
+
+def create_summary():
+    summary = []
     for k, v in donor_db.items():
         total = (sum(v))
         times = (len(v))
         avg = (sum(v) / len(v))
         summary.append([k, total, times, avg])
+
     summary.sort(key=lambda d: d[1], reverse=True)
-    for i in summary:
-        print("{:20}  ${:>12,.2f}{:>10}     ${:>14,.2f}".format(i[0], i[1], i[2], i[3]))
-        print("")
+    return summary
+
 
 def exit_program():
     print("Good-Bye!")
     sys.exit()  # exit the interactive script
+
 
 # Processing
 def main():
@@ -155,7 +156,6 @@ def main():
             print("Not a valid option!")
 
 
-
 ''' Switch with the above functions "write_a_letter and write_a_letter_all" '''
 
 switch_func_dict = {
@@ -166,4 +166,3 @@ switch_func_dict = {
 if __name__ == "__main__":
     # don't forget this block to guard against your code running automatically if this module is imported
     main()
-

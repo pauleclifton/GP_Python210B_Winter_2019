@@ -1,7 +1,7 @@
 '''
 ##########################
 #Python 210
-#Session 07 - Circle Exercise
+#Session 08 - Circle Exercise
 #Elaine Xu
 #Mar 5, 2019
 ###########################
@@ -40,14 +40,10 @@ class Circle(object):
 #############################
 # Step 5 add an alternate constructor that create circle directly with the diameter
 #############################
-
-#    @classmethod
-#    def from_diameter(cls, diameter):
-#        self = cls(self)
-#        self.diameter = diameter
-#        self.radius = diameter/2
-#        return self.diameter
-
+    @classmethod
+    def from_diameter(cls, diameter):
+        radius = diameter/2
+        return cls(radius)
 
 #############################
 # Step 6 add __str__ and __repr__ methods
@@ -58,29 +54,52 @@ class Circle(object):
     def __repr__(self):
         return "Circle({})".format(self.radius)
 
-
 #############################
 # Step 7 add numerical protocol
 #############################
     def __add__(self, other):
-        return "Circle({})".format(self.radius + other.radius)
+        return (self.radius + other.radius)
 
-    def __mul__(self, other):
-        return "Circle({})".format(self.radius * other)
+    def __mul__(self, val):
+        try:
+            return (self.radius * val)
+        except TypeError:
+            __rmul__(self, val)
+
+    def __rmul__(self, val):
+        return (self.radius * val)
 
 #############################
 # Step 8 add ability to compare two circles
 #############################
+    def __eq__(self, other):
+        return (self.radius == other.radius)
+
+    def __lt__(self, other):
+        return (self.radius < other.radius)
+
+    def __iadd__(self, other):
+        return self.radius + other.radius
+
+    def __imul__(self, val):
+        return self.radius * val
 
 #############################
 # Step 9 sphere subclassing
 #############################
-'''c = Circle(4)
-c = Circle.from_diameter(8)
-print(c.diameter)
-'''
-c1 = Circle(2)
-c2 = Circle(4)
-print(c1+c2)
-print(c2 * 3)
-#print(3 * c2)
+class Sphere(Circle):
+    def __str__(self):
+        return "Sphere with radius: " + str(self.radius)
+
+    def __repr__(self):
+        return "Sphere({})".format(self.radius)
+
+    @property
+    def volume(self):
+        return 4/3 * math.pi * self.radius**3
+
+    @property
+    def area(self):
+        raise NotImplementedError
+
+
