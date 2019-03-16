@@ -27,11 +27,11 @@ class CommandInterface():
     def thank_you_message():
          while True:                         
              name = input("Enter 'name' to add new donor\n"
-                         " or nter 'list' to see list of donors\n"
+                         " or Enter 'list' to see list of donors\n"
                          " (or type 'menu to exit)>>").strip()             
 
              if name == 'list':                
-                print(dc.donor_list())
+                print(print_donor_list())
              elif name == 'menu':
                  return
              else:
@@ -64,6 +64,11 @@ class CommandInterface():
 
 def print_donor_report():
        print(dc.donor_report())
+
+def print_donor_list():
+    print("\nDonor Names:")
+    print("-" *15)
+    print(dc.donor_list())       
 
        
 def exit_program():
