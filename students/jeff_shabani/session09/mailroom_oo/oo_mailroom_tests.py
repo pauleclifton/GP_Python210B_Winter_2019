@@ -6,9 +6,6 @@
 # donor_models.py
 
 import mock
-import shutil
-import students
-import tempfile
 import unittest
 
 
