@@ -58,13 +58,9 @@ class Donor():
     
 class DonorCollection():
     def __init__(self):
-        self.donors_dict = {'william gates':[3, 3000.45],
-                            'Jeff Bezos':[2, 3452.00],
-                            }
-            
-        
-            
-           
+        self.donors_dict = {}
+                            
+                       
     def find_donor(self, name):
         if name.lower() in self.donors_dict:
             return self.donors_dict[name.lower()]
