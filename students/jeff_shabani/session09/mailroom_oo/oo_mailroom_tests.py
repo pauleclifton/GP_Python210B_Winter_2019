@@ -124,6 +124,29 @@ class OOMailroomTests(unittest.TestCase):
             d.quit_the_program()
         del d
 
+    def test_run_report(self):
+        """Test console output of donors names"""
+        d = CommandLineInterface(donors_test)
+        header = f'{"Name".ljust(20)}{"| Total Donations".rjust(20)}{"| # of Donations".rjust(20)}' \
+            f'{"| Average Donation".rjust(20)}'
+        dashes = '-' * len(header)
+        donor_one_name= 'Sammy Maudlin'
+        donor_one_total = 2295
+        donor_one_count = 4
+        donor_one_mean = 1.0
+        
+        donor_zwei_name= 'Karsten Willems'
+        donor_zwei_total = 300
+        donor_zwei_count = 3
+        donor_zwei_mean = 1.0
+        first_line = f'{donor_one_name.ljust(20)}{str(donor_one_total).rjust(20)}{str(donor_one_count).rjust(20)}{str(donor_one_mean).rjust(20)}'
+        zweite_line = f'{donor_zwei_name.ljust(20)}{str(donor_zwei_total).rjust(20)}{str(donor_zwei_count).rjust(20)}{str(donor_zwei_mean).rjust(20)}'
+
+        with patch ('sys.stdout', new=StringIO()) as mocked_output:
+            d.create_report()
+            self.assertEqual(mocked_output.getvalue().strip(), f'{header}\n{dashes}\n{first_line}\n{zweite_line}')
+        del d
+
 
 
     @mock.patch('builtins.input', mock.Mock(return_value='54'))
