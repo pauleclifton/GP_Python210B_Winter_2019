@@ -125,7 +125,7 @@ class OOMailroomTests(unittest.TestCase):
         del d
 
     def test_run_report(self):
-        """Test console output of donors names"""
+        """Test console output when report is run"""
         d = CommandLineInterface(donors_test)
         header = f'{"Name".ljust(20)}{"| Total Donations".rjust(20)}{"| # of Donations".rjust(20)}' \
             f'{"| Average Donation".rjust(20)}'
@@ -139,6 +139,7 @@ class OOMailroomTests(unittest.TestCase):
         donor_zwei_total = 300
         donor_zwei_count = 3
         donor_zwei_mean = 1.0
+
         first_line = f'{donor_one_name.ljust(20)}{str(donor_one_total).rjust(20)}{str(donor_one_count).rjust(20)}{str(donor_one_mean).rjust(20)}'
         zweite_line = f'{donor_zwei_name.ljust(20)}{str(donor_zwei_total).rjust(20)}{str(donor_zwei_count).rjust(20)}{str(donor_zwei_mean).rjust(20)}'
 
