@@ -16,8 +16,6 @@ from io import StringIO
 from cli_main import *
 from unittest.mock import patch
 
-"""
-Test for mailroom_oo. Note: these are not complete."""
 
 ANSWER = 'New_Donor'
 AMOUNT = 4512
