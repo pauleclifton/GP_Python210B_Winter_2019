@@ -25,6 +25,7 @@ new_dir = f'{Path.cwd()}\letter_tests'
 
 new_dir2 = f'{Path.cwd()}\letter_tests2'
 
+#delete test directory from previous tests
 if os.path.exists(new_dir2):
     os.rmdir(new_dir2)
 else:
