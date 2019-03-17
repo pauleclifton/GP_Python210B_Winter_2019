@@ -79,7 +79,7 @@ class CommandLineInterface(DonorCollection, Donor):
                 continue
 
             amount = CommandLineInterface.get_value(self, 'How much would this donor like to donate?', int)
-            self.get_non_negative_value(amount)
+            amount = self.get_non_negative_value(amount)
 
             CommandLineInterface.set_letter_directory_path_path(self)
 

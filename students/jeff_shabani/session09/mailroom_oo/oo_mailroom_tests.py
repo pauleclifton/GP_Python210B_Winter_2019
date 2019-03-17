@@ -166,11 +166,12 @@ class OOMailroomTests(unittest.TestCase):
         Test user input type check: wrong type entered"""
         self.assertEqual(CommandLineInterface.get_value(self, 'Enter a value:', str), 'Incorrect data type')
 
-    # @mock.patch('builtins.input', mock.Mock(return_value='-54'))
-    # def test_reject_negative_donation(self):
-    #     """
-    #     Test user input type check: correct type entered"""
-    #     self.assertEqual(CommandLineInterface.get_non_negative_value(self, 'Enter a value:', int), "Please enter a positve number.")
+    @mock.patch('builtins.input', mock.Mock(return_value='-54'))
+    def test_reject_negative_donation(self):
+        """
+        Test user input type check: correct type entered"""
+        self.assertEqual(CommandLineInterface.get_non_negative_value(self, 'Enter a number'),"Please enter a "
+                                                                                                "positve number.")
 
     @mock.patch('builtins.input', mock.Mock(return_value=None))
     def test_set_letter_dir_path_no_change(self):
