@@ -192,3 +192,4 @@ class OOMailroomTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+    os.rmdir(new_dir2)
