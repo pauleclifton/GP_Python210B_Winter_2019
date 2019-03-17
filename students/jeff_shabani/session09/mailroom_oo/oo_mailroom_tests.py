@@ -169,7 +169,7 @@ class OOMailroomTests(unittest.TestCase):
     @mock.patch('builtins.input', mock.Mock(return_value='-54'))
     def test_reject_negative_donation(self):
         """
-        Test user input type check: correct type entered"""
+        Test user input check for negative donation"""
         self.assertEqual(CommandLineInterface.get_non_negative_value(self, 'Enter a number'),"Please enter a "
                                                                                                 "positve number.")
 

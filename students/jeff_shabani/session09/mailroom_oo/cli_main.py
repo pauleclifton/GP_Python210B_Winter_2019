@@ -127,6 +127,7 @@ class CommandLineInterface(DonorCollection, Donor):
 
 
 if __name__ == '__main__':
+    pass
 
     # this stuff was used for quick tests
     donors_main = {'Karsten Willems': [120, 130, 50],
