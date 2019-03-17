@@ -92,8 +92,6 @@ class OOMailroomTests(unittest.TestCase):
         text for all letters will be the same. Letters are deleted
         after tests are run.
         """
-        lt = CommandLineInterface(donors_test)
-        # new_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\letter_tests'
         os.chdir(new_dir)
         with open('Karsten Willems.txt', 'rt') as infile:
             lines = infile.readlines()
@@ -195,4 +193,4 @@ class OOMailroomTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-    os.rmdir(new_dir2)
+
