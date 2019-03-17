@@ -53,6 +53,11 @@ class DonorCollection(Donor):
         """
         self.donors[answer] = [amount]
 
+    def add_donation_to_existing_donor(self, answer, amount):
+        """
+        Adds a new donation to previous donor's record"""
+        self.donors[answer].append(amount)
+
     def create_new_donors_dict(self):
         """
         dictionay comprehension of donors with sum, len, and average of values.

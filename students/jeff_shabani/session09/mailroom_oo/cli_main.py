@@ -32,6 +32,17 @@ class CommandLineInterface(DonorCollection, Donor):
                 print("Invalid value.  Please try again")
                 continue
 
+    @property
+    def get_value_non_negarive(self):
+        while True:
+            if self.get_value(self) > 0:
+                return self.get_value(self)
+            else:
+                print('Donations are not negative. Please enter a positive number')
+                continue
+
+
+
     def set_letter_directory_path_path(self):
         """
         Check if user-entered directory exists and offer them the
@@ -75,7 +86,7 @@ class CommandLineInterface(DonorCollection, Donor):
                 DonorCollection.add_donor(self, answer, amount)
                 Donor.write_a_single_letter(self, answer, amount)
             else:
-                DonorCollection.add_donor(self, answer, amount)
+                DonorCollection.add_donation_to_existing_donor(self, answer, amount)
                 Donor.write_a_single_letter(self, answer, amount)
 
             print(f'\nThank you {answer.split()[0]} for you generous donation of ${amount:,.0f}\n')
@@ -117,9 +128,9 @@ class CommandLineInterface(DonorCollection, Donor):
 if __name__ == '__main__':
 
     # this stuff was used for quick tests
-    donors_test = {'Karsten Willems': [120, 130, 50],
+    donors_main = {'Karsten Willems': [120, 130, 50],
                    'Sammy Maudlin': [500, 125, 670, 1000]
                    }
 
-    run = CommandLineInterface(donors_test)
+    run = CommandLineInterface(donors_main)
     run.main()

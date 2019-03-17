@@ -24,9 +24,16 @@ donors_test = {'Karsten Willems': [120, 130, 50],
 #use for testing setting new letter path
 base_path = Path(r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\mailroom_oo')
 new_dir = f'{Path.cwd()}\letter_tests'
+
 new_dir2 = f'{Path.cwd()}\letter_tests2'
 
 class OOMailroomTests(unittest.TestCase):
+
+    """
+    Remove test dirctory from previous runs.
+    """
+    if new_dir2:
+        os.rmdir(new_dir2)
 
     def test_add_donor(self):
         d = CommandLineInterface(donors_test)
