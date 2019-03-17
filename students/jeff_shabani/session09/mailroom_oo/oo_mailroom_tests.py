@@ -11,6 +11,7 @@ import unittest
 
 from io import StringIO
 from cli_main import *
+from pathlib import Path
 from unittest.mock import patch
 
 
@@ -21,7 +22,9 @@ donors_test = {'Karsten Willems': [120, 130, 50],
                'Sammy Maudlin': [500, 125, 670, 1000]
                }
 #use for testing setting new letter path
-new_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\letter_tests'
+base_path = Path(r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\mailroom_oo')
+new_dir = f'{Path.cwd()}\letter_tests'
+new_dir2 = f'{Path.cwd()}\letter_tests2'
 
 class OOMailroomTests(unittest.TestCase):
 
@@ -68,17 +71,14 @@ class OOMailroomTests(unittest.TestCase):
         letters and compares that list against list of expected letters.
         """
         lt = CommandLineInterface(donors_test)
-        new_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\letter_tests'
         os.chdir(new_dir)
         lt.write_letters_to_all_donors()
-        cd = os.getcwd()
-        for items in os.walk(cd):
+        for items in os.walk(new_dir):
             files = [item for item in items[2]]
         letters_to_write = ['Karsten Willems.txt', 'read_letters.py', 'Sammy Maudlin.txt']
         for file in files:
             self.assertIn(file, letters_to_write)
-        old_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\mailroom_oo'
-        os.chdir(old_dir)
+        os.chdir(base_path)
 
     def test_letter_text_from_all_donors_letter_creation(self):
         """
@@ -88,7 +88,7 @@ class OOMailroomTests(unittest.TestCase):
         after tests are run.
         """
         lt = CommandLineInterface(donors_test)
-        new_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\letter_tests'
+        #new_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\letter_tests'
         os.chdir(new_dir)
         with open('Karsten Willems.txt', 'rt') as infile:
             lines = infile.readlines()
@@ -103,8 +103,7 @@ class OOMailroomTests(unittest.TestCase):
         letters_to_delete = ['Karsten Willems.txt','Sammy Maudlin.txt']
         for letter in letters_to_delete:
             os.remove(letter)
-        old_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\mailroom_oo'
-        os.chdir(old_dir)
+        os.chdir(base_path)
 
     def test_view_donor_names(self):
         """Test console output of donors names"""
@@ -160,11 +159,15 @@ class OOMailroomTests(unittest.TestCase):
 
     @mock.patch('builtins.input', mock.Mock(return_value='54'))
     def test_get_value_2(self):
+        """
+        Test user input type check: correct type entered"""
         self.assertEqual(CommandLineInterface.get_value(self, 'Enter a value:', int), 54)
 
     @mock.patch('builtins.input', mock.Mock(return_value='54'))
     @unittest.expectedFailure
     def test_get_wrong_input(self):
+        """
+        Test user input type check: wrong type entered"""
         self.assertEqual(CommandLineInterface.get_value(self, 'Enter a value:', str), 'Incorrect data type')
 
     @mock.patch('builtins.input', mock.Mock(return_value=None))
@@ -174,13 +177,16 @@ class OOMailroomTests(unittest.TestCase):
         expected = os.getcwd()
         self.assertEqual(CommandLineInterface.set_letter_directory_path_path(self), expected)
 
-    @mock.patch('builtins.input', mock.Mock(return_value=new_dir))
+    @mock.patch('builtins.input', mock.Mock(return_value=new_dir2))
     def test_set_letter_dir_path_new(self):
+        """
+        tests for that letter patch is cwd when a new path is entered"""
         d = CommandLineInterface(donors_test)
-        os.chdir(new_dir)
+        os.mkdir(new_dir2)
+        os.chdir(new_dir2)
         expected = os.getcwd()
         d.set_letter_directory_path_path()
-        self.assertEqual(new_dir, expected)
+        self.assertEqual(new_dir2, expected)
         del d
 
 
