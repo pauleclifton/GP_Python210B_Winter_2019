@@ -11,7 +11,7 @@ import sys
 from donor_models import *
 
 """
-Contains mailroom user interaction functions
+Contains mailroom user interaction logic.
 """
 
 
@@ -124,14 +124,3 @@ class CommandLineInterface(DonorCollection, Donor):
                         "3 - Send letters to all donors",
                         "4 - Quit",
                         ">>> "))
-
-
-if __name__ == '__main__':
-
-    # this stuff was used for quick tests
-    donors_main = {'Karsten Willems': [120, 130, 50],
-                   'Sammy Maudlin': [500, 125, 670, 1000]
-                   }
-
-    run = CommandLineInterface(donors_main)
-    run.main()
