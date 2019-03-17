@@ -8,12 +8,10 @@
 import mock
 import unittest
 
-
 from io import StringIO
 from cli_main import *
 from pathlib import Path
 from unittest.mock import patch
-
 
 ANSWER = 'New_Donor'
 AMOUNT = 4512
@@ -21,26 +19,26 @@ AMOUNT = 4512
 donors_test = {'Karsten Willems': [120, 130, 50],
                'Sammy Maudlin': [500, 125, 670, 1000]
                }
-#use for testing setting new letter path
+# use for testing setting new letter path
 base_path = Path(r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\mailroom_oo')
 new_dir = f'{Path.cwd()}\letter_tests'
 
 new_dir2 = f'{Path.cwd()}\letter_tests2'
 
-class OOMailroomTests(unittest.TestCase):
+if os.path.exists(new_dir2):
+    os.rmdir(new_dir2)
+else:
+    pass
 
-    """
-    Remove test dirctory from previous runs.
-    """
-    if new_dir2:
-        os.rmdir(new_dir2)
+
+class OOMailroomTests(unittest.TestCase):
 
     def test_add_donor(self):
         d = CommandLineInterface(donors_test)
         d.add_donor(ANSWER, AMOUNT)
         self.assertIn(ANSWER, d.donors)
         self.assertIn(AMOUNT, d.donors[ANSWER])
-        #remove new donor from dictionary
+        # remove new donor from dictionary
         del donors_test[ANSWER]
         del d
 
@@ -95,7 +93,7 @@ class OOMailroomTests(unittest.TestCase):
         after tests are run.
         """
         lt = CommandLineInterface(donors_test)
-        #new_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\letter_tests'
+        # new_dir = r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\letter_tests'
         os.chdir(new_dir)
         with open('Karsten Willems.txt', 'rt') as infile:
             lines = infile.readlines()
@@ -107,7 +105,7 @@ class OOMailroomTests(unittest.TestCase):
             self.assertEqual(lines[5], '\n')
             self.assertEqual(lines[6], 'Best regards,\n')
             self.assertEqual(lines[7], 'The Charitable Charities Team')
-        letters_to_delete = ['Karsten Willems.txt','Sammy Maudlin.txt']
+        letters_to_delete = ['Karsten Willems.txt', 'Sammy Maudlin.txt']
         for letter in letters_to_delete:
             os.remove(letter)
         os.chdir(base_path)
@@ -115,7 +113,7 @@ class OOMailroomTests(unittest.TestCase):
     def test_view_donor_names(self):
         """Test console output of donors names"""
         d = CommandLineInterface(donors_test)
-        with patch ('sys.stdout', new=StringIO()) as mocked_output:
+        with patch('sys.stdout', new=StringIO()) as mocked_output:
             d.view_donor_names()
             self.assertEqual(mocked_output.getvalue().strip(), f'Karsten Willems\nSammy Maudlin')
         del d
@@ -134,12 +132,12 @@ class OOMailroomTests(unittest.TestCase):
             f'{"| Average Donation".rjust(20)}'
 
         dashes = '-' * len(header)
-        donor_one_name= 'Sammy Maudlin'
+        donor_one_name = 'Sammy Maudlin'
         donor_one_total = 2295
         donor_one_count = 4
         donor_one_mean = 573.75
 
-        donor_zwei_name= 'Karsten Willems'
+        donor_zwei_name = 'Karsten Willems'
         donor_zwei_total = 300
         donor_zwei_count = 3
         donor_zwei_mean = 100.0
@@ -149,23 +147,14 @@ class OOMailroomTests(unittest.TestCase):
         zweite_line = f'{donor_zwei_name.ljust(20)}{str(donor_zwei_total).rjust(20)}{str(donor_zwei_count).rjust(20)}' \
             f'{str(donor_zwei_mean).rjust(20)}'
 
-        with patch ('sys.stdout', new=StringIO()) as mocked_output:
+        with patch('sys.stdout', new=StringIO()) as mocked_output:
             d.create_report()
             self.assertEqual(mocked_output.getvalue().strip(), f'{header}\n{dashes}\n{first_line}\n{zweite_line}')
         del d
 
-    # def test_add_donor_and_generate_report(self):
-    #     d = CommandLineInterface(donors_test)
-    #     d.add_donor(ANSWER, AMOUNT)
-    #     print('This is the new dict',donors_test)
-    #     # expected = {k: (sum(v), len(v), (sum(v) / len(v))) for k, v in donors_test.items()}
-    #     # self.assertDictEqual(d.create_new_donors_dict(), expected)
-    #     # del d
-
-
 
     @mock.patch('builtins.input', mock.Mock(return_value='54'))
-    def test_get_value_2(self):
+    def test_get_value(self):
         """
         Test user input type check: correct type entered"""
         self.assertEqual(CommandLineInterface.get_value(self, 'Enter a value:', int), 54)
@@ -176,6 +165,12 @@ class OOMailroomTests(unittest.TestCase):
         """
         Test user input type check: wrong type entered"""
         self.assertEqual(CommandLineInterface.get_value(self, 'Enter a value:', str), 'Incorrect data type')
+
+    # @mock.patch('builtins.input', mock.Mock(return_value='-54'))
+    # def test_reject_negative_donation(self):
+    #     """
+    #     Test user input type check: correct type entered"""
+    #     self.assertEqual(CommandLineInterface.get_non_negative_value(self, 'Enter a value:', int), "Please enter a positve number.")
 
     @mock.patch('builtins.input', mock.Mock(return_value=None))
     def test_set_letter_dir_path_no_change(self):

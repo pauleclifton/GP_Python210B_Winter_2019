@@ -32,18 +32,16 @@ class CommandLineInterface(DonorCollection, Donor):
                 print("Invalid value.  Please try again")
                 continue
 
-    def get_non_negative_value(self, text, condition):
-        value = CommandLineInterface.get_value(self, 'How much would this donor like to donate?', int)
-        return value
-        condition = lambda x : x > 0
+    def get_non_negative_value(self, value):
+        """
+        Asks for a positive number if user enters a negative donation"""
         while True:
-            try:
-                value = condition(input('Enter and amount'))
+            while value > 0:
                 return value
-            except ValueError:
-                print('Come on man')
+            if value < 0:
+                del value
+                value = int(input("Please enter a positve number."))
                 continue
-
 
     def set_letter_directory_path_path(self):
         """
@@ -81,7 +79,7 @@ class CommandLineInterface(DonorCollection, Donor):
                 continue
 
             amount = CommandLineInterface.get_value(self, 'How much would this donor like to donate?', int)
-            #amount = CommandLineInterface.get_non_negative_value(self, "ender and amoint", lambda x : x >0)
+            self.get_non_negative_value(amount)
 
             CommandLineInterface.set_letter_directory_path_path(self)
 
