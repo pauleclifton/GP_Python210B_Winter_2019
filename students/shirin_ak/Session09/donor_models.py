@@ -34,19 +34,17 @@ class Donor():
     def ave_donations(self):
         return self.total_donations/self.num_donations
 
-    
-    def __str__(self):
-        return f'{self.name}:{self.donation}'
-
-    
     @property
-    def thank_you_letter(self):
-        """
-        returns a string that is a formatted thank you note
-        with the donor's name and last donation amount.
-        """
-        return "Dear {:s},\n\nWe greatly appreciate your generous donation of"
-        " ${:,.2f}.\n\nThank you,\nThe Team".format(self.name, self.donations[-1])
+    def last_donation(self):
+        if len(self.donation) > 0:
+            return self.donation[-1]
+        else:
+            return 0
+
+    def __str__(self):
+       
+       return f'{self.name}:{self.donation}' 
+           
         
  #--------------------------------
  #       End of Donor class
@@ -71,8 +69,13 @@ class DonorCollection():
         """allows for adding new donors to the db"""
         
         new_donor = Donor(name)
-        self.donors_dict[new_donor.name.lower()] = new_donor
+        self.donors_dict[new_donor.name] = new_donor
         return new_donor
+
+    def search_donor(self,name):
+        return self.donors_dict.get(name.lower())
+
+        
 
     
     @staticmethod
@@ -81,7 +84,7 @@ class DonorCollection():
 
     
     def donor_list(self):
-        name_list = [donor.name for donor in self.donors_dict]
+        name_list = [donor.name for donor in self.donors_dict.values()]
         return '\n'.join(name_list)
 
 
@@ -90,13 +93,13 @@ class DonorCollection():
 
     def donor_report(self):
         report_rows = []
-        for donor in self.donors_dict:
+        for donor in self.donors_dict.values():
             name = donor.name
-            donations = donor.donations
+            donation = donor.donation
             total_donations = donor.total_donations
-            num_donations = len(donations)
+            num_donations = len(donation)
 
-            avg_donation = donor.average_donation
+            avg_donation = donor.ave_donations
             report_rows.append((name, total_donations, num_donations, avg_donation))
         report_rows.sort(key=self.sort_key)
         report = []
@@ -118,7 +121,7 @@ class DonorCollection():
         with the donor's name and last donation amount.
         """               
         return ("Dear {:s},\n\nWe greatly appreciate your generous donation of"
-        " ${:,.2f}.\n\nThank you,\nThe Team".format(donor.name, donor.donations[-1]))
+        " ${:,.2f}.\n\nThank you,\nThe Team".format(donor.name, donor.last_donation))
 
     
     def save_letters_to_disk(self):
@@ -126,8 +129,8 @@ class DonorCollection():
          """
         Generate letter for each donor and write to disk
         """
-         for donor in self.donors_dict:
-            print("creating letter to{:s}".format(donor.name))
+         for donor in self.donors_dict.values():
+            print("creating letter to {:s}".format(donor.name))
             letter = self.write_letter(donor)
             filename = donor.name.replace(" ", "_") + ".txt"
             with open(filename, 'w') as outfile:

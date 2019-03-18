@@ -1,3 +1,9 @@
+#------------------------
+#!/usr/bin/env python3
+#Session 09 Exercise:Mailroom Object Oriented
+#Shirin Akther
+#-------------------------
+
 
 import sys
 import math
@@ -13,79 +19,85 @@ from donor_models import DonorCollection
 
 dc = DonorCollection()
 
-
 class CommandInterface():
-    PROMPT = "\n".join(("Please select a menu option below:",
-                    "1 - Send a Thank You to an individual",
-                    "2 - Create a Report",
-                    "3 - Send letters to all donors",
-                    "4 - Quit",
-                    ">>> "))
+    def main_menu():
+        mainmenu = input("""
+        What would you like to do?
 
+        (1) - Send a Thank You Letter
+        (2) - Build a Report
+        (3) - Send letters to all donors
+        (4) - Quit
+        > """)
+        
+        return mainmenu.strip()
 
+    
+def thank_you_message():
 
-    def thank_you_message():
-         while True:                         
-             name = input("Enter 'name' to add new donor\n"
-                         " or Enter 'list' to see list of donors\n"
-                         " (or type 'menu to exit)>>").strip()             
+    while True:
+        name = input("Enter the donor's name\n"
+                     "or Enter 'list' to see list of donor's\n"
+                      " (or type 'menu to exit\n"
+                     ">>>").strip()
+        if name == 'list':
+            print_donor_list()
 
-             if name == 'list':                
-                print(print_donor_list())
-             elif name == 'menu':
-                 return
-             else:
+        elif name == 'menu':
+            return
+        else:
+            break
 
-                break
+# creates loop for donation amount input
 
-         while True:
-             donation_input = input("Enter the amount donated "
-                              "(or 'menu' to exit)>").strip()
-             if donation_input == 'menu':
+    while True:
+        donationinput = input("Enter the amount donated\n "
+                              "(or 'menu' to exit)>>").strip()
+        if donationinput == 'menu':
+            return
+        try:
+            amount = float(donationinput)           
+        except ValueError:
+            print("please enter a valid donation amount")
 
-                 return
-             try:
-               amount = float(donation_input)
-               return donation_input
-             except ValueError:
-               print("please enter a valid donation amount")
+        else:
+            break
 
-             else:
-                 break
-         # If this is a new user, ensure that the database has the necessary
-         # data structure.                   
-         donor = dc.find_donor(name)
-         if donor is None:
-             donor = dc.add_donor(name)
-         #record the donation    
-             donor.add_donation(amount)
-             print(dc.write_letter(donor))
+    donor = dc.search_donor(name)
+    if donor is None:
+        donor = dc.add_donor(name)
 
+        donor.add_donations(amount)
+        dc.write_letter(donor)
 
-def print_donor_report():
-       print(dc.donor_report())
 
 def print_donor_list():
     print("\nDonor Names:")
     print("-" *15)
-    print(dc.donor_list())       
+    print(dc.donor_list())
 
-       
+
+def print_donor_report():
+    """display donor report"""
+    print(dc.donor_report())
+
+      
 def exit_program():
+    """quits the program when prompted in the menu"""
     print("Bye!")
     sys.exit(0)
 
     
 def runmain():
-    
-    selection_dict = {"1": CommandInterface.thank_you_message,
+    """ Updated menu function using dictionary and Error handling """
+    selection_dict = {"1":thank_you_message,
                      "2": print_donor_report,
                      "3": dc.save_letters_to_disk,
                      "4": exit_program
                       }
 
     while True:
-        selection = input(CommandInterface.PROMPT)
+        selection = CommandInterface.main_menu()
         try:
             selection_dict[selection]()
         except KeyError:
@@ -93,8 +105,6 @@ def runmain():
 
 
 if __name__ == "__main__":
-
     runmain()
-
     
         
