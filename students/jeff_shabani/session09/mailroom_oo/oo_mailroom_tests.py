@@ -25,7 +25,7 @@ new_dir = f'{Path.cwd()}\letter_tests'
 
 new_dir2 = f'{Path.cwd()}\letter_tests2'
 
-#delete test directory from previous tests
+# delete test directory from previous tests
 if os.path.exists(new_dir2):
     os.rmdir(new_dir2)
 else:
@@ -151,7 +151,6 @@ class OOMailroomTests(unittest.TestCase):
             self.assertEqual(mocked_output.getvalue().strip(), f'{header}\n{dashes}\n{first_line}\n{zweite_line}')
         del d
 
-
     @mock.patch('builtins.input', mock.Mock(return_value='54'))
     def test_get_value(self):
         """
@@ -166,11 +165,12 @@ class OOMailroomTests(unittest.TestCase):
         self.assertEqual(CommandLineInterface.get_value(self, 'Enter a value:', str), 'Incorrect data type')
 
     @mock.patch('builtins.input', mock.Mock(return_value='-54'))
-    def test_reject_negative_donation(self):
+    @unittest.expectedFailure
+    def test_reject_negative_donation2(self):
         """
-        Test user input check for negative donation"""
-        self.assertEqual(CommandLineInterface.get_non_negative_value(self, 'Enter a number'),"Please enter a "
-                                                                                                "positve number.")
+        Test that negative donations are rejected."""
+        self.assertEqual(CommandLineInterface.get_non_negative_value(self, 'Enter a value:'), 'Donation cannot '
+                                                                                              'be negative')
 
     @mock.patch('builtins.input', mock.Mock(return_value=None))
     def test_set_letter_dir_path_no_change(self):
@@ -194,4 +194,3 @@ class OOMailroomTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

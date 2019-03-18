@@ -124,3 +124,12 @@ class CommandLineInterface(DonorCollection, Donor):
                         "3 - Send letters to all donors",
                         "4 - Quit",
                         ">>> "))
+
+if __name__ == '__main__':
+
+    test = {'Karsten Willems': [120, 130, 50],
+                   'Sammy Maudlin': [500, 125, 670, 1000]}
+
+    c=CommandLineInterface(test)
+    c.main()
+
