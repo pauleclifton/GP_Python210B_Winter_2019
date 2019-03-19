@@ -30,7 +30,7 @@ class CommandInterface():
         (4) - Quit
         > """)
         
-        return mainmenu.strip()
+        return mainmenu
 
     
 def thank_you_message():
@@ -39,7 +39,7 @@ def thank_you_message():
         name = input("Enter the donor's name\n"
                      "or Enter 'list' to see list of donor's\n"
                       " (or type 'menu to exit\n"
-                     ">>>").strip()
+                     ">>>")
         if name == 'list':
             print_donor_list()
 
@@ -52,7 +52,7 @@ def thank_you_message():
 
     while True:
         donationinput = input("Enter the amount donated\n "
-                              "(or 'menu' to exit)>>").strip()
+                              "(or 'menu' to exit)>>")
         if donationinput == 'menu':
             return
         try:
@@ -63,12 +63,17 @@ def thank_you_message():
         else:
             break
 
+# If this is a new user, ensure that the database has the necessary 
+# data structure.          
+
     donor = dc.search_donor(name)
     if donor is None:
         donor = dc.add_donor(name)
-
+      #Record the donation
         donor.add_donations(amount)
-        dc.write_letter(donor)
+    else:
+        donor.add_donations(amount)
+    dc.write_letter(donor)
 
 
 def print_donor_list():
