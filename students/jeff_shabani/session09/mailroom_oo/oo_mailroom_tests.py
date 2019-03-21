@@ -10,8 +10,11 @@ import os
 import platform
 import unittest
 
-from io import StringIO
+
+from cleanup_test_directories import *
 from cli_main import *
+from create_test_directories import *
+from io import StringIO
 from pathlib import Path
 from unittest.mock import patch
 
@@ -33,18 +36,16 @@ else:
     new_dir = f'{base_path}/letter_tests'
     new_dir2 = f'{base_path}/letter_tests2'
 
-
-if not os.path.exists(new_dir):
-    os.mkdir(new_dir)
-
-if not os.path.exists(new_dir2):
-    os.mkdir(new_dir2)
-
-# delete test directory from previous tests
-if os.path.exists(new_dir2):
-    os.rmdir(new_dir2)
-else:
+#create letter test folders
+if os.path.exists(new_dir):
     pass
+else:
+    os.makedirs(new_dir)
+
+if os.path.exists(new_dir2):
+    pass
+else:
+    os.makedirs(new_dir2)
 
 
 class OOMailroomTests(unittest.TestCase):
@@ -199,7 +200,7 @@ class OOMailroomTests(unittest.TestCase):
         """
         tests for that letter path is cwd when a new path is entered"""
         d = CommandLineInterface(donors_test)
-        os.mkdir(new_dir2)
+        #os.mkdir(new_dir2)
         os.chdir(new_dir2)
         expected = os.getcwd()
         d.set_letter_directory_path_path()
@@ -209,3 +210,5 @@ class OOMailroomTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+

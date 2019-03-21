@@ -3,7 +3,7 @@
 # Jeff Shabani
 # March 2019
 # Python 210, Session 9
-# cleanup_test_directories.py
+# create_test_directories.py
 
 import os
 import platform
