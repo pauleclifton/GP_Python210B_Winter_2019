@@ -10,10 +10,7 @@ import os
 import platform
 import unittest
 
-
-from cleanup_test_directories import *
 from cli_main import *
-from create_test_directories import *
 from io import StringIO
 from pathlib import Path
 from unittest.mock import patch
