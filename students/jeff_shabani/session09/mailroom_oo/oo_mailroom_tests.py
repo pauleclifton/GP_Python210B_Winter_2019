@@ -6,6 +6,8 @@
 # donor_models.py
 
 import mock
+import os
+import platform
 import unittest
 
 from io import StringIO
@@ -19,11 +21,17 @@ AMOUNT = 4512
 donors_test = {'Karsten Willems': [120, 130, 50],
                'Sammy Maudlin': [500, 125, 670, 1000]
                }
-# use for testing setting new letter path
-base_path = Path(r'C:\JRS\Python\UW\Intro_Klass\students\jeff_shabani\session09\mailroom_oo')
-new_dir = f'{Path.cwd()}\letter_tests'
 
-new_dir2 = f'{Path.cwd()}\letter_tests2'
+# current working directory
+base_path = Path.cwd()
+
+# check system type & set path to letter testing folders
+if platform.system() == 'Windows':
+    new_dir = f'{base_path}\letter_tests'
+    new_dir2 = f'{base_path}\letter_tests2'
+else:
+    new_dir = f'{base_path}/letter_tests'
+    new_dir2 = f'{base_path}/letter_tests2'
 
 # delete test directory from previous tests
 if os.path.exists(new_dir2):
@@ -182,7 +190,7 @@ class OOMailroomTests(unittest.TestCase):
     @mock.patch('builtins.input', mock.Mock(return_value=new_dir2))
     def test_set_letter_dir_path_new(self):
         """
-        tests for that letter patch is cwd when a new path is entered"""
+        tests for that letter path is cwd when a new path is entered"""
         d = CommandLineInterface(donors_test)
         os.mkdir(new_dir2)
         os.chdir(new_dir2)

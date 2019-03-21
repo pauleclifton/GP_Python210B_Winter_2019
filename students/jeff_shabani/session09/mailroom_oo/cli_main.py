@@ -125,10 +125,3 @@ class CommandLineInterface(DonorCollection, Donor):
                         "4 - Quit",
                         ">>> "))
 
-
-donors_test = {'Karsten Willems': [120, 130, 50],
-               'Sammy Maudlin': [500, 125, 670, 1000]
-               }
-c=CommandLineInterface(donors_test)
-c.main()
-
