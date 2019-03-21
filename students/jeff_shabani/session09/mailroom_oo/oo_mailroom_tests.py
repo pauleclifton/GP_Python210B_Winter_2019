@@ -33,6 +33,13 @@ else:
     new_dir = f'{base_path}/letter_tests'
     new_dir2 = f'{base_path}/letter_tests2'
 
+
+if not os.path.exists(new_dir):
+    os.mkdir(new_dir)
+
+if not os.path.exists(new_dir2):
+    os.mkdir(new_dir2)
+
 # delete test directory from previous tests
 if os.path.exists(new_dir2):
     os.rmdir(new_dir2)
