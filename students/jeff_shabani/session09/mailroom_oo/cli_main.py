@@ -124,4 +124,3 @@ class CommandLineInterface(DonorCollection, Donor):
                         "3 - Send letters to all donors",
                         "4 - Quit",
                         ">>> "))
-
