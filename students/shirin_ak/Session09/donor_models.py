@@ -1,5 +1,3 @@
-import sys
-import string
 
 #This class will hold all the information about a single donor,
 #and have attributes, properties, and methods to provide access
@@ -11,87 +9,71 @@ class Donor():
         self.name = name
         self.donation = []
 
-    def __name__(self):
-        return self.name
-    
     def add_donations(self, amount):
+        """add new donations """
         self.donation.append(amount)
 
-        
     @property
     def total_donations(self):
         """return total donation of a single donor"""
         return sum(self.donation)
 
-    
     @property
     def num_donations(self):
-        """return number of donations a donor donated"""        
+        """return number of donations a donor donated"""
         return len(self.donation)
 
-    
     @property
     def ave_donations(self):
+        """return average donation of a single donor"""
         return self.total_donations/self.num_donations
 
     @property
     def last_donation(self):
-        if len(self.donation) > 0:
-            return self.donation[-1]
-        else:
-            return 0
+        """return last donation a donor is donated"""
+        return self.donation[-1]
 
-    def __str__(self):
-       
-       return f'{self.name}:{self.donation}' 
-           
-        
- #--------------------------------
- #       End of Donor class
- #------------------------------
+    def __repr__(self):
+        return "{}: {}".format(self.name, self.donation)
 
 # This class will hold all of the donor objects, as well as methods to add a new donor,
 #search for a given donor,  generates reports about multiple donors.
 #In other words,if the functionality involves more than one donor – it belongs in this class.
-    
 class DonorCollection():
+    """Stores information for collections of donors"""
     def __init__(self):
         self.donors_dict = {}
-                            
-                       
-    def find_donor(self, name):
+
+    def find_donor(self, name):        
         if name.lower() in self.donors_dict:
             return self.donors_dict[name.lower()]
         return None
 
-
     def add_donor(self, name):
         """allows for adding new donors to the db"""
-        
         new_donor = Donor(name)
         self.donors_dict[new_donor.name] = new_donor
         return new_donor
 
-    def search_donor(self,name):
+    def search_donor(self, name):
+        """search for donor if donor is exist"""
         return self.donors_dict.get(name.lower())
 
-        
-
-    
     @staticmethod
     def sort_key(item):
         return item[1]
-
     
     def donor_list(self):
+        """Updated by Comprehensions"""
         name_list = [donor.name for donor in self.donors_dict.values()]
-        return '\n'.join(name_list)
+        return ''.join(str(name_list))
 
-
-#Builds the donor report and displays the name, total given, number of gifts
-# and the average gift donated by the donor.
 
     def donor_report(self):
+        """
+        display the name,total given, number of gifts and the
+        average gift donated by the donor
+        """
         report_rows = []
         for donor in self.donors_dict.values():
             name = donor.name
@@ -113,33 +95,30 @@ class DonorCollection():
         for row in report_rows:
             report.append("{:25s}   ${:10.2f}   ${:9d}   ${:11.2f}".format(*row))
         return "\n".join(report)
-
     
-    def write_letter(self, donor):
+    def write_letter(self, donor_name):
         """
         returns a string that is a formatted thank you note
         with the donor's name and last donation amount.
-        """               
-        return ("Dear {:s},\n\nWe greatly appreciate your generous donation of"
-        " ${:,.2f}.\n\nThank you,\nThe Team".format(donor.name, donor.last_donation))
+        """
+        letter = ("Dear {:s},\nWe greatly appreciate your generous donation of"
+                  " ${:,.2f}.\nThank you,\nThe Team")\
+                   .format(donor_name.name, donor_name.last_donation)
+        return letter
 
-    
     def save_letters_to_disk(self):
-        
-         """
+        """
         Generate letter for each donor and write to disk
         """
-         for donor in self.donors_dict.values():
+        for donor in self.donors_dict.values():
             print("creating letter to {:s}".format(donor.name))
             letter = self.write_letter(donor)
-            filename = donor.name.replace(" ", "_") + ".txt"
-            with open(filename, 'w') as outfile:
+            file_name = donor.name.replace(" ", "_") + ".txt"
+            with open(file_name, 'w') as outfile:
                 outfile.write(letter)
 
-
-
- #----------------------------------------
- #       End of DonorCollection class
- #----------------------------------------
+                
+            
+        
 
 

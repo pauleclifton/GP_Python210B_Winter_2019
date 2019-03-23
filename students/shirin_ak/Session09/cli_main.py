@@ -3,10 +3,7 @@
 #Session 09 Exercise:Mailroom Object Oriented
 #Shirin Akther
 #-------------------------
-
-
 import sys
-import math
 from donor_models import Donor
 from donor_models import DonorCollection
 
@@ -16,30 +13,26 @@ from donor_models import DonorCollection
    handle each of mode of the program
  """
 
-
 dc = DonorCollection()
 
 class CommandInterface():
     def main_menu():
         mainmenu = input("""
-        What would you like to do?
-
+        Please select a menu option below:
         (1) - Send a Thank You Letter
         (2) - Build a Report
         (3) - Send letters to all donors
         (4) - Quit
         > """)
-        
         return mainmenu
 
-    
 def thank_you_message():
 
     while True:
         name = input("Enter the donor's name\n"
                      "or Enter 'list' to see list of donor's\n"
-                      " (or type 'menu to exit\n"
-                     ">>>")
+                     "or type 'menu to exit\n"
+                     ">>>").lower()
         if name == 'list':
             print_donor_list()
 
@@ -47,9 +40,7 @@ def thank_you_message():
             return
         else:
             break
-
 # creates loop for donation amount input
-
     while True:
         donationinput = input("Enter the amount donated\n "
                               "(or 'menu' to exit)>>")
@@ -59,13 +50,10 @@ def thank_you_message():
             amount = float(donationinput)           
         except ValueError:
             print("please enter a valid donation amount")
-
         else:
             break
-
 # If this is a new user, ensure that the database has the necessary 
-# data structure.          
-
+# data structure.
     donor = dc.search_donor(name)
     if donor is None:
         donor = dc.add_donor(name)
@@ -75,30 +63,27 @@ def thank_you_message():
         donor.add_donations(amount)
     dc.write_letter(donor)
 
-
 def print_donor_list():
+    """display donor list"""
     print("\nDonor Names:")
     print("-" *15)
     print(dc.donor_list())
-
 
 def print_donor_report():
     """display donor report"""
     print(dc.donor_report())
 
-      
 def exit_program():
     """quits the program when prompted in the menu"""
     print("Bye!")
     sys.exit(0)
 
-    
 def runmain():
     """ Updated menu function using dictionary and Error handling """
     selection_dict = {"1":thank_you_message,
-                     "2": print_donor_report,
-                     "3": dc.save_letters_to_disk,
-                     "4": exit_program
+                      "2": print_donor_report,
+                      "3": dc.save_letters_to_disk,
+                      "4": exit_program
                       }
 
     while True:
