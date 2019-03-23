@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#pylint: disable=C0103,W0104, W0107
+#pylint: disable=C0103,W0104,W0107
 
 # Douglas Klos
 # March 7th, 2019

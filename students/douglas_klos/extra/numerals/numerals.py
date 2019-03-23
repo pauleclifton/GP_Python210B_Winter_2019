@@ -65,56 +65,24 @@ class Numerals():
         """ Returns the roman numeral for self._arabic """
         number = self._arabic
         roman_numeral = ''
-        while number >= 1000:
-            roman_numeral += 'M'
-            number -= 1000
 
-        while number >= 900:
-            roman_numeral += 'CM'
-            number -= 900
+        roman_conversions = [
+            ('M', 1000),
+            ('CM', 900),
+            ('D', 500),
+            ('CD', 400),
+            ('C', 100),
+            ('XC', 90),
+            ('L', 50),
+            ('XL', 40),
+            ('X', 10),
+            ('IX', 9),
+            ('V', 5),
+            ('IV', 4),
+            ('I', 1)
+        ]
 
-        while number >= 500:
-            roman_numeral += 'D'
-            number -= 500
-
-        while number >= 400:
-            roman_numeral += 'CD'
-            number -= 400
-
-        while number >= 100:
-            roman_numeral += 'C'
-            number -= 100
-
-        while number >= 90:
-            roman_numeral += 'XC'
-            number -= 90
-
-        while number >= 50:
-            roman_numeral += 'L'
-            number -= 50
-
-        while number >= 40:
-            roman_numeral += 'XL'
-            number -= 40
-
-        while number >= 10:
-            roman_numeral += 'X'
-            number -= 10
-
-        while number >= 9:
-            roman_numeral += 'IX'
-            number -= 10
-
-        while number >= 5:
-            roman_numeral += 'V'
-            number -= 5
-
-        while number >= 4:
-            roman_numeral += 'IV'
-            number -= 4
-
-        while number >= 1:
-            roman_numeral += 'I'
-            number -= 1
-
-        return roman_numeral
+        for value in roman_conversions:
+            while number >= value[1]:
+                roman_numeral += value[0]
+                number -= value[1]
