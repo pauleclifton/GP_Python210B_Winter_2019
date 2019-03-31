@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
+import mock
 import unittest
 
 from pathlib import Path
-from unittest.mock import patch
-
 from students.jeff_shabani.session06 import mailroom_4
 
 ANSWER = 'New_Donor'
@@ -59,13 +58,9 @@ class mailroomTests(unittest.TestCase):
 
         self.assertIn('Bobby', mailroom_4.create_new_donors_dict())
 
-    @patch('students.jeff_shabani.session06.mailroom_4.get_value_test')
-    def test_correct_input(self, mock_input):
-        """
-        test for correct input. Not currently working.
-        """
-        mock_input.return_value = 6
-        self.assertEqual(mailroom_4.get_value_test('Enter', int), 6)
+    @mock.patch('mailroom_4.get_value', mock.Mock(return_value='54'))
+    def test_correct_input(self):
+        self.assertEqual(mailroom_4.get_value('Enter a value:', int), 'Invalid')
 
 
 if __name__ == '__main__':
